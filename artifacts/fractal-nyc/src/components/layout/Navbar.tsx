@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
@@ -18,11 +18,25 @@ export function Navbar() {
     setIsScrolled(latest > 50);
   });
 
-  const links = [
+  const sectionLinks = [
     { name: "Story", href: "#story" },
+    { name: "Campus", href: "#campus" },
     { name: "Projects", href: "#projects" },
     { name: "Vision", href: "#vision" },
     { name: "Directory", href: "#directory" },
+  ];
+
+  const communityLinks = [
+    { icon: "📚", name: "Fractal University", href: "#directory" },
+    { icon: "🛌", name: "Stay at Fractal", href: "#directory" },
+    { icon: "✏️", name: "Writing", href: "#directory" },
+    { icon: "🎧", name: "Podcasts & Talks", href: "#directory" },
+    { icon: "✨", name: "Vibes", href: "#directory" },
+    { icon: "🗽", name: "Excelsior", href: "#directory" },
+    { icon: "💃", name: "Events", href: "#directory" },
+    { icon: "🔎", name: "Find the Others", href: "#directory" },
+    { icon: "🕸️", name: "Alumni Accelerator", href: "#directory" },
+    { icon: "❓", name: "How Can I Help?", href: "#directory" },
   ];
 
   return (
@@ -43,9 +57,8 @@ export function Navbar() {
             Fractal
           </a>
 
-          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
-            {links.map((link) => (
+            {sectionLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
@@ -62,7 +75,6 @@ export function Navbar() {
             </a>
           </nav>
 
-          {/* Mobile Toggle */}
           <button
             className="md:hidden z-50 relative p-2 -mr-2 text-foreground"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -72,27 +84,42 @@ export function Navbar() {
         </div>
       </motion.header>
 
-      {/* Mobile Menu */}
       <motion.div
         initial={false}
         animate={mobileMenuOpen ? "open" : "closed"}
         variants={{
-          open: { opacity: 1, pointerEvents: "auto" },
-          closed: { opacity: 0, pointerEvents: "none" },
+          open: { opacity: 1, pointerEvents: "auto" as const },
+          closed: { opacity: 0, pointerEvents: "none" as const },
         }}
-        className="fixed inset-0 z-40 bg-background flex flex-col items-center justify-center"
+        className="fixed inset-0 z-40 bg-background overflow-y-auto pt-24 pb-12"
       >
-        <nav className="flex flex-col items-center gap-8">
-          {links.map((link) => (
+        <nav className="flex flex-col items-center gap-6 px-6">
+          {sectionLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="font-serif text-4xl hover:text-foreground/70 transition-colors"
+              className="font-serif text-3xl hover:text-foreground/70 transition-colors"
             >
               {link.name}
             </a>
           ))}
+          <div className="w-full max-w-sm border-t border-border my-4 pt-6">
+            <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4 text-center">Community</p>
+            <div className="grid grid-cols-2 gap-3">
+              {communityLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 text-sm text-foreground/80 hover:text-foreground transition-colors py-2"
+                >
+                  <span>{link.icon}</span>
+                  <span>{link.name}</span>
+                </a>
+              ))}
+            </div>
+          </div>
         </nav>
       </motion.div>
     </>

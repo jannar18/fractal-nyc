@@ -2,16 +2,16 @@ import { FadeIn } from "@/components/ui/FadeIn";
 import { ArrowUpRight } from "lucide-react";
 
 const directoryItems = [
-  { icon: "📚", title: "Fractal University" },
-  { icon: "🛌", title: "Stay at Fractal" },
-  { icon: "✏️", title: "Writing" },
-  { icon: "🎧", title: "Podcasts & Talks" },
-  { icon: "✨", title: "Vibes" },
-  { icon: "🗽", title: "Excelsior" },
-  { icon: "💃", title: "Events" },
-  { icon: "🔎", title: "Find the Others" },
-  { icon: "🕸️", title: "Alumni of Our Neighborhood Accelerator" },
-  { icon: "❓", title: "How Can I Help?" },
+  { icon: "📚", title: "Fractal University", href: "#projects" },
+  { icon: "🛌", title: "Stay at Fractal", href: "#campus" },
+  { icon: "✏️", title: "Writing", href: "#story" },
+  { icon: "🎧", title: "Podcasts & Talks", href: "#story" },
+  { icon: "✨", title: "Vibes", href: "#vision" },
+  { icon: "🗽", title: "Excelsior", href: "#vision" },
+  { icon: "💃", title: "Events", href: "#campus" },
+  { icon: "🔎", title: "Find the Others", href: "#story" },
+  { icon: "🕸️", title: "Alumni of Our Neighborhood Accelerator", href: "#projects" },
+  { icon: "❓", title: "How Can I Help?", href: "#vision" },
 ];
 
 export function Directory() {
@@ -27,7 +27,6 @@ export function Directory() {
           </div>
         </FadeIn>
 
-        {/* Architectural / Editorial Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
           {directoryItems.map((item, index) => (
             <FadeIn 
@@ -36,7 +35,7 @@ export function Directory() {
               className="bg-background relative group"
             >
               <a 
-                href="#" 
+                href={item.href} 
                 className="block p-8 md:p-12 h-full transition-colors duration-300 hover:bg-secondary/50"
               >
                 <div className="flex justify-between items-start mb-12">
@@ -55,8 +54,6 @@ export function Directory() {
               </a>
             </FadeIn>
           ))}
-          
-          {/* Fill remaining grid spaces to keep the architectural lines clean */}
           <div className="bg-background hidden lg:block"></div>
           <div className="bg-background hidden lg:block"></div>
         </div>
