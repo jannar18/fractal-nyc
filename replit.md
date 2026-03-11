@@ -91,6 +91,19 @@ Generated Zod schemas from the OpenAPI spec (e.g. `HealthCheckResponse`). Used b
 
 Generated React Query hooks and fetch client from the OpenAPI spec (e.g. `useHealthCheck`, `healthCheck`).
 
+### `artifacts/fractal-nyc` (`@workspace/fractal-nyc`)
+
+Fractal NYC community website — a static, frontend-only React + Vite site for the Fractal Collective in NYC. Single-page scrolling site with sections for hero, origin story, key projects (Fractal University, Bootcamp & Tech Hub, Merlin's Place), vision statement, community directory, and footer. Design inspired by the Asimov Collective aesthetic (shinkei.systems, monumentallabs.co). No backend or API calls.
+
+- Entry: `src/App.tsx` — routes via wouter
+- Pages: `src/pages/Home.tsx` — assembles all sections
+- Sections: `src/components/sections/` — Hero, OriginStory, Projects, Vision, Directory
+- Layout: `src/components/layout/` — Navbar, Footer
+- UI: `src/components/ui/FadeIn.tsx` — scroll-triggered animation component
+- Theme: `src/index.css` — warm beige/cream palette, editorial serif typography
+- Dependencies: framer-motion, lucide-react, clsx, tailwind-merge
+- Preview path: `/` (root)
+
 ### `scripts` (`@workspace/scripts`)
 
 Utility scripts package. Each script is a `.ts` file in `src/` with a corresponding npm script in `package.json`. Run scripts via `pnpm --filter @workspace/scripts run <script>`. Scripts can import any workspace package (e.g., `@workspace/db`) by adding it as a dependency in `scripts/package.json`.
