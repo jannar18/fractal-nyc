@@ -3,27 +3,21 @@ import { FadeIn } from "@/components/ui/FadeIn";
 const projects = [
   {
     id: "01",
-    title: "Fractal University",
-    description: "Where we teach everything from art, to cooking, to coding. Classes are cozy (we teach them from our living rooms), and it's a lot of fun to learn from and with our friends.",
-    image: "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=2070&auto=format&fit=crop"
+    title: "Fractal Bootcamp & Tech Hub",
+    description: "A three month intensive software engineering bootcamp, paired with our co-working space and AI accelerator. A rigorous environment for builders who want to level up their skills and ship projects together.",
+    image: `${import.meta.env.BASE_URL}images/fractal-tech-hub.png`
   },
   {
     id: "02",
-    title: "Fractal Bootcamp",
-    description: "A three month intensive software engineering bootcamp. A rigorous environment for builders who want to level up their skills together.",
-    image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop"
+    title: "Fractal University",
+    description: "Where we teach everything from art, to cooking, to coding. Classes are cozy (we teach them from our living rooms), and it's a lot of fun to learn from and with our friends.",
+    image: `${import.meta.env.BASE_URL}images/fractal-university.png`
   },
   {
     id: "03",
-    title: "Fractal Tech Hub",
-    description: "Our co-working space where members build, collaborate, and ship projects side by side. A home base for the builders in our community.",
-    image: "https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?q=80&w=2070&auto=format&fit=crop"
-  },
-  {
-    id: "04",
     title: "Merlin's Place",
     description: "Our first community-run third space. A hub for spontaneous connection, featuring a custom 3000-LED lighting installation on the ceiling.",
-    image: `${import.meta.env.BASE_URL}images/merlins.png`
+    image: `${import.meta.env.BASE_URL}images/merlins-place.png`
   }
 ];
 
@@ -35,7 +29,7 @@ export function Projects() {
           <div className="mb-20 md:mb-32">
             <h2 className="text-sm font-semibold tracking-widest uppercase text-muted-foreground mb-4">Incubations</h2>
             <p className="text-3xl md:text-5xl font-serif max-w-2xl leading-tight">
-              Projects we are <span className="italic">especially proud</span> of.
+              Three we're <span className="italic">especially proud</span> of.
             </p>
           </div>
         </FadeIn>
@@ -66,7 +60,7 @@ export function Projects() {
                     <img 
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 filter grayscale-[20%]"
+                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                     />
                     <div className="absolute inset-4 border border-background/30 pointer-events-none z-10 hidden md:block opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   </div>
