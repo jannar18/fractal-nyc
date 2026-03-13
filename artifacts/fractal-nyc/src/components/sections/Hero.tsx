@@ -21,10 +21,14 @@ export function Hero() {
           </FadeIn>
           
           <FadeIn delay={0.3}>
-            <h1 className="text-6xl md:text-8xl lg:text-[10rem] leading-[0.9] font-serif tracking-tighter mb-8 text-foreground">
-              Fractal <br />
-              <span className="italic text-foreground/80">Collective</span>
-            </h1>
+            <div className="mb-8">
+              <h1 className="text-8xl md:text-[10rem] lg:text-[14rem] leading-[0.85] font-serif tracking-tighter text-foreground">
+                Fractal
+              </h1>
+              <p className="text-5xl md:text-7xl lg:text-8xl leading-[0.9] font-mono tracking-tighter text-foreground/80">
+                Collective
+              </p>
+            </div>
           </FadeIn>
 
           <FadeIn delay={0.5} className="max-w-2xl">
