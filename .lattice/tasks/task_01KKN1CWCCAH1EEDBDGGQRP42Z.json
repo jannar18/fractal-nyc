@@ -7,7 +7,7 @@
   "created_by": "agent:claude-cli",
   "custom_fields": {},
   "description": "Update/replace a site section to present Fractal's physical campus spaces and facilities.",
-  "done_at": "2026-03-14T02:54:49Z",
+  "done_at": null,
   "evidence_refs": [
     {
       "id": "ev_01KKN4959YTCQ502CTWKAB2PVX",
@@ -21,8 +21,8 @@
     }
   ],
   "id": "task_01KKN1CWCCAH1EEDBDGGQRP42Z",
-  "last_event_id": "ev_01KKN4959YTCQ502CTWKAB2PW0",
-  "last_status_changed_at": "2026-03-14T02:54:49Z",
+  "last_event_id": "ev_01KKPKJ4NEF7NA541WBQZ6YDAC",
+  "last_status_changed_at": "2026-03-14T16:41:06Z",
   "priority": "medium",
   "relationships_out": [
     {
@@ -33,13 +33,13 @@
       "type": "depends_on"
     }
   ],
-  "reopened_count": 0,
+  "reopened_count": 1,
   "schema_version": 1,
   "short_id": "FRAC-3",
-  "status": "done",
+  "status": "backlog",
   "tags": null,
   "title": "Rework section: Campus",
   "type": "task",
-  "updated_at": "2026-03-14T02:54:49Z",
+  "updated_at": "2026-03-14T16:41:06Z",
   "urgency": null
 }
