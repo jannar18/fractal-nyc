@@ -25,8 +25,7 @@ export function FractalCityScene() {
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         style={{ background: "transparent" }}
         onCreated={({ gl }) => {
-          gl.toneMapping = THREE.ReinhardToneMapping;
-          gl.toneMappingExposure = 1.5;
+          gl.toneMapping = THREE.NoToneMapping;
           gl.setClearColor(0x000000, 0);
         }}
       >

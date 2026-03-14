@@ -1,6 +1,6 @@
 import { Suspense, lazy } from "react";
 import { FadeIn } from "@/components/ui/FadeIn";
-import { SkylineSilhouette } from "./SkylineSilhouette";
+
 
 const FractalCityScene = lazy(() =>
   import("@/components/three/FractalCityScene").then((m) => ({
@@ -15,36 +15,25 @@ export function Hero() {
         <FractalCityScene />
       </Suspense>
 
-      <SkylineSilhouette />
+      <div className="absolute inset-0 z-0 flex items-end pointer-events-none">
+        <img
+          src={`${import.meta.env.BASE_URL}images/skyline4.png`}
+          alt="NYC skyline illustration"
+          className="w-full object-cover object-bottom opacity-50"
+        />
+      </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full" style={{ textShadow: "0 1px 8px rgba(250,248,245,0.9), 0 0 30px rgba(250,248,245,0.7)" }}>
-        <div className="max-w-4xl">
-          <FadeIn delay={0.1}>
-            <p className="text-sm md:text-base font-semibold tracking-widest uppercase text-muted-foreground mb-6">
-              New York City
-            </p>
-          </FadeIn>
-          
-          <FadeIn delay={0.3}>
-            <div className="mb-8">
-              <h1 className="text-8xl md:text-[10rem] lg:text-[14rem] leading-[0.85] font-serif tracking-tighter text-foreground">
-                Fractal
-              </h1>
-              <p className="text-5xl md:text-7xl lg:text-8xl leading-[0.9] font-mono tracking-tighter text-foreground/80">
-                Collective
-              </p>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.5} className="max-w-2xl">
-            <p className="text-xl md:text-3xl font-medium leading-snug text-foreground/90 text-balance">
+      <div className="absolute inset-0 z-10 px-6 md:px-12 py-24 md:py-32 flex flex-col" style={{ textShadow: "0 1px 8px rgba(250,248,245,0.9), 0 0 30px rgba(250,248,245,0.7)" }}>
+        <div className="mt-auto flex items-end justify-between">
+          <FadeIn delay={0.5} className="max-w-md">
+            <p className="text-base md:text-xl font-medium leading-snug text-foreground/90 text-balance">
               In 2021, our small group of friends decided to live, learn, and build together in NYC.
             </p>
           </FadeIn>
-          
-          <FadeIn delay={0.7} className="mt-12">
-            <a 
-              href="#story" 
+
+          <FadeIn delay={0.7}>
+            <a
+              href="#story"
               className="inline-flex items-center gap-2 text-sm font-medium uppercase tracking-widest link-underline pb-1"
             >
               Explore our story

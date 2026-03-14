@@ -2,16 +2,14 @@ import { FadeIn } from "@/components/ui/FadeIn";
 import { ArrowUpRight } from "lucide-react";
 
 const directoryItems = [
-  { icon: "📚", title: "Fractal University", href: "#projects" },
-  { icon: "🛌", title: "Stay at Fractal", href: "#campus" },
-  { icon: "✏️", title: "Writing", href: "#story" },
-  { icon: "🎧", title: "Podcasts & Talks", href: "#story" },
-  { icon: "✨", title: "Vibes", href: "#vision" },
-  { icon: "🗽", title: "Excelsior", href: "#vision" },
-  { icon: "💃", title: "Events", href: "#campus" },
-  { icon: "🔎", title: "Find the Others", href: "#story" },
-  { icon: "🕸️", title: "Alumni of Our Neighborhood Accelerator", href: "#projects" },
-  { icon: "❓", title: "How Can I Help?", href: "#vision" },
+  { icon: "🎓", title: "Futurist Liberal Arts", href: "#liberal-arts" },
+  { icon: "🏠", title: "Coliving", href: "#coliving" },
+  { icon: "🏛️", title: "Campus", href: "#campus" },
+  { icon: "⚖️", title: "Political Club", href: "#political-club" },
+  { icon: "🔬", title: "Research Lab", href: "#research-lab" },
+  { icon: "📰", title: "Publication", href: "#publication" },
+  { icon: "🔗", title: "Protocol", href: "#protocol" },
+  { icon: "📅", title: "Events", href: "#events" },
 ];
 
 export function Directory() {

@@ -37,7 +37,7 @@ function PhotoCenter({ imagePath }: { imagePath: string }) {
   return (
     <mesh>
       <sphereGeometry args={[0.7, 64, 64]} />
-      <meshBasicMaterial map={texture} />
+      <meshBasicMaterial map={texture} color="#ffffff" />
     </mesh>
   );
 }
@@ -63,8 +63,9 @@ export function FractalObject({ imagePath }: { imagePath: string }) {
 
   useFrame((_, delta) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 0.12;
-      groupRef.current.rotation.x += delta * 0.03;
+      const d = Math.min(delta, 0.05);
+      groupRef.current.rotation.y += d * 0.12;
+      groupRef.current.rotation.x += d * 0.03;
     }
   });
 
