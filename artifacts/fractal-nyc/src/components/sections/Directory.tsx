@@ -2,13 +2,14 @@ import { FadeIn } from "@/components/ui/FadeIn";
 import { ArrowUpRight } from "lucide-react";
 
 const directoryItems = [
-  { icon: "🏘️", title: "Neighborhood", href: "#neighborhood" },
-  { icon: "🎓", title: "New Liberal Arts", href: "#new-liberal-arts" },
-  { icon: "🏛️", title: "A Campus", href: "#a-campus" },
-  { icon: "📅", title: "Events", href: "#events" },
-  { icon: "⚖️", title: "Political Club", href: "#political-club" },
-  { icon: "🔬", title: "Research + Publication", href: "#research-publication" },
-  { icon: "🔗", title: "The Protocol", href: "#the-protocol" },
+  { title: "Mission", href: "#mission" },
+  { title: "Neighborhood", href: "#neighborhood" },
+  { title: "New Liberal Arts", href: "#new-liberal-arts" },
+  { title: "A Campus", href: "#a-campus" },
+  { title: "Events", href: "#events" },
+  { title: "Political Club", href: "#political-club" },
+  { title: "Research + Publication", href: "#research-publication" },
+  { title: "The Protocol", href: "#the-protocol" },
 ];
 
 export function Directory() {
@@ -24,7 +25,7 @@ export function Directory() {
           </div>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-border">
           {directoryItems.map((item, index) => (
             <FadeIn 
               key={index} 
@@ -36,12 +37,9 @@ export function Directory() {
                 className="block p-8 md:p-12 h-full transition-colors duration-300 hover:bg-secondary/50"
               >
                 <div className="flex justify-between items-start mb-12">
-                  <span className="text-4xl md:text-5xl filter grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-110 origin-bottom-left">
-                    {item.icon}
-                  </span>
-                  <ArrowUpRight 
-                    className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-all duration-300 transform -translate-x-4 translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0" 
-                    size={24} 
+                  <ArrowUpRight
+                    className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-all duration-300 transform -translate-x-4 translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0 ml-auto"
+                    size={24}
                     strokeWidth={1}
                   />
                 </div>
@@ -51,8 +49,6 @@ export function Directory() {
               </a>
             </FadeIn>
           ))}
-          <div className="bg-background hidden lg:block"></div>
-          <div className="bg-background hidden lg:block"></div>
         </div>
       </div>
     </section>

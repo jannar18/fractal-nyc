@@ -19,6 +19,7 @@ export function Navbar() {
   });
 
   const sectionLinks = [
+    { name: "Mission", href: "#mission" },
     { name: "Neighborhood", href: "#neighborhood" },
     { name: "New Liberal Arts", href: "#new-liberal-arts" },
     { name: "A Campus", href: "#a-campus" },
@@ -44,7 +45,7 @@ export function Navbar() {
         <div className="relative py-5 px-6 max-md:hidden">
           <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
             <nav className="flex items-center justify-end gap-2" style={{ transform: 'translateY(-20px)' }}>
-              {sectionLinks.slice(0, 3).map((link) => (
+              {sectionLinks.slice(0, 4).map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
@@ -61,7 +62,7 @@ export function Navbar() {
             </a>
 
             <nav className="flex items-center justify-start gap-2" style={{ transform: 'translateY(-20px)' }}>
-              {sectionLinks.slice(3).map((link) => (
+              {sectionLinks.slice(4).map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
