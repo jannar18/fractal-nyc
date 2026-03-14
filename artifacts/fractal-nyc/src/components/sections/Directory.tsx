@@ -2,14 +2,13 @@ import { FadeIn } from "@/components/ui/FadeIn";
 import { ArrowUpRight } from "lucide-react";
 
 const directoryItems = [
-  { icon: "🎓", title: "Futurist Liberal Arts", href: "#liberal-arts" },
-  { icon: "🏠", title: "Coliving", href: "#coliving" },
-  { icon: "🏛️", title: "Campus", href: "#campus" },
-  { icon: "⚖️", title: "Political Club", href: "#political-club" },
-  { icon: "🔬", title: "Research Lab", href: "#research-lab" },
-  { icon: "📰", title: "Publication", href: "#publication" },
-  { icon: "🔗", title: "Protocol", href: "#protocol" },
+  { icon: "🏘️", title: "Neighborhood", href: "#neighborhood" },
+  { icon: "🎓", title: "New Liberal Arts", href: "#new-liberal-arts" },
+  { icon: "🏛️", title: "A Campus", href: "#a-campus" },
   { icon: "📅", title: "Events", href: "#events" },
+  { icon: "⚖️", title: "Political Club", href: "#political-club" },
+  { icon: "🔬", title: "Research + Publication", href: "#research-publication" },
+  { icon: "🔗", title: "The Protocol", href: "#the-protocol" },
 ];
 
 export function Directory() {
