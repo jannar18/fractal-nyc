@@ -8,7 +8,7 @@ const directoryItems = [
   { title: "A Campus", href: "#a-campus" },
   { title: "Events", href: "#events" },
   { title: "Political Club", href: "#political-club" },
-  { title: "Research + Publication", href: "#research-publication" },
+  { title: "Research + Writing", href: "#research-publication" },
   { title: "The Protocol", href: "#the-protocol" },
 ];
 

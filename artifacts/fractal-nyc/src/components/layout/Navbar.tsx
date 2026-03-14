@@ -25,7 +25,7 @@ export function Navbar() {
     { name: "A Campus", href: "#a-campus" },
     { name: "Events", href: "#events" },
     { name: "Political Club", href: "#political-club" },
-    { name: "Research + Publication", href: "#research-publication" },
+    { name: "Research + Writing", href: "#research-publication" },
     { name: "The Protocol", href: "#the-protocol" },
   ];
 
