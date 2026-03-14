@@ -101,7 +101,8 @@ Fractal NYC community website — a static, frontend-only React + Vite site for 
 - Layout: `src/components/layout/` — Navbar, Footer
 - UI: `src/components/ui/FadeIn.tsx` — scroll-triggered animation component
 - Theme: `src/index.css` — warm beige/cream palette, editorial serif typography
-- Dependencies: framer-motion, lucide-react, clsx, tailwind-merge
+- 3D Scene: `src/components/three/` — FractalCityScene (Canvas + lighting), Skyline (procedural NYC buildings), FractalObject (recursive icosahedron wireframe)
+- Dependencies: framer-motion, lucide-react, clsx, tailwind-merge, three, @react-three/fiber, @react-three/drei
 - Preview path: `/` (root)
 
 ### `scripts` (`@workspace/scripts`)

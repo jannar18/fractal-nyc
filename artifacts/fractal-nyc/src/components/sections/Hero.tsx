@@ -1,18 +1,23 @@
+import { Suspense, lazy } from "react";
 import { FadeIn } from "@/components/ui/FadeIn";
+import { SkylineSilhouette } from "./SkylineSilhouette";
+
+const FractalCityScene = lazy(() =>
+  import("@/components/three/FractalCityScene").then((m) => ({
+    default: m.FractalCityScene,
+  }))
+);
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-      {/* Background Image/Abstract */}
-      <div className="absolute inset-0 z-0 opacity-40 mix-blend-multiply">
-        <img
-          src={`${import.meta.env.BASE_URL}images/hero-abstract.png`}
-          alt="Abstract architectural detail"
-          className="w-full h-full object-cover"
-        />
-      </div>
+    <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-[#faf8f5]">
+      <Suspense fallback={null}>
+        <FractalCityScene />
+      </Suspense>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full">
+      <SkylineSilhouette />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full" style={{ textShadow: "0 1px 8px rgba(250,248,245,0.9), 0 0 30px rgba(250,248,245,0.7)" }}>
         <div className="max-w-4xl">
           <FadeIn delay={0.1}>
             <p className="text-sm md:text-base font-semibold tracking-widest uppercase text-muted-foreground mb-6">
