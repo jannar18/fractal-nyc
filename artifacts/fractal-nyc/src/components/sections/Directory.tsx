@@ -2,13 +2,13 @@ import { FadeIn } from "@/components/ui/FadeIn";
 import { ArrowUpRight } from "lucide-react";
 
 const directoryItems = [
-  { title: "Research + Publication", href: "#research-publication" },
+  { title: "Mission", href: "#mission" },
   { title: "Neighborhood", href: "#neighborhood" },
   { title: "New Liberal Arts", href: "#new-liberal-arts" },
   { title: "A Campus", href: "#a-campus" },
   { title: "Events", href: "#events" },
   { title: "Political Club", href: "#political-club" },
-  { title: "Mission", href: "#mission" },
+  { title: "Research + Publication", href: "#research-publication" },
   { title: "The Protocol", href: "#the-protocol" },
 ];
 
