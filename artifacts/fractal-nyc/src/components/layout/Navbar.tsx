@@ -44,7 +44,7 @@ export function Navbar() {
       >
         <div className="relative py-5 px-6 max-md:hidden">
           <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
-            <nav className="flex items-center justify-end gap-2" style={{ transform: 'translateY(-20px)' }}>
+            <nav className="flex items-center justify-evenly" style={{ transform: 'translateY(-20px)' }}>
               {sectionLinks.slice(0, 4).map((link) => (
                 <a
                   key={link.name}
@@ -61,7 +61,7 @@ export function Navbar() {
               <span className="font-serif text-3xl md:text-4xl lg:text-5xl block italic">Collective</span>
             </a>
 
-            <nav className="flex items-center justify-start gap-2" style={{ transform: 'translateY(-20px)' }}>
+            <nav className="flex items-center justify-evenly" style={{ transform: 'translateY(-20px)' }}>
               {sectionLinks.slice(4).map((link) => (
                 <a
                   key={link.name}
