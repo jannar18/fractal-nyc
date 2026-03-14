@@ -19,13 +19,13 @@ export function Navbar() {
   });
 
   const sectionLinks = [
-    { name: "Mission", href: "#mission" },
+    { name: "Research + Publication", href: "#research-publication" },
     { name: "Neighborhood", href: "#neighborhood" },
     { name: "New Liberal Arts", href: "#new-liberal-arts" },
     { name: "A Campus", href: "#a-campus" },
     { name: "Events", href: "#events" },
     { name: "Political Club", href: "#political-club" },
-    { name: "Research + Publication", href: "#research-publication" },
+    { name: "Mission", href: "#mission" },
     { name: "The Protocol", href: "#the-protocol" },
   ];
 
