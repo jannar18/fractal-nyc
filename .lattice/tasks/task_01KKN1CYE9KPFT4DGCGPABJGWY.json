@@ -7,7 +7,7 @@
   "created_by": "agent:claude-cli",
   "custom_fields": {},
   "description": "Update/replace a site section to present Fractal's research lab \u2014 ongoing projects, areas of inquiry, collaborations.",
-  "done_at": "2026-03-14T02:54:52Z",
+  "done_at": null,
   "evidence_refs": [
     {
       "id": "ev_01KKN4988RS6XDXN7Q9GZWFE2W",
@@ -21,8 +21,8 @@
     }
   ],
   "id": "task_01KKN1CYE9KPFT4DGCGPABJGWY",
-  "last_event_id": "ev_01KKN4988RS6XDXN7Q9GZWFE2Z",
-  "last_status_changed_at": "2026-03-14T02:54:52Z",
+  "last_event_id": "ev_01KKPKJ6Z5ZKVC4W6QB713TYS7",
+  "last_status_changed_at": "2026-03-14T16:41:08Z",
   "priority": "medium",
   "relationships_out": [
     {
@@ -33,13 +33,13 @@
       "type": "depends_on"
     }
   ],
-  "reopened_count": 0,
+  "reopened_count": 1,
   "schema_version": 1,
   "short_id": "FRAC-5",
-  "status": "done",
+  "status": "backlog",
   "tags": null,
   "title": "Rework section: Research Lab",
   "type": "task",
-  "updated_at": "2026-03-14T02:54:52Z",
+  "updated_at": "2026-03-14T16:41:08Z",
   "urgency": null
 }
