@@ -1,0 +1,1 @@
+Created PoliticalClub.tsx — bg-muted centered layout with texture overlay (Vision-style). Heading, descriptive paragraph, blockquote, and 3-column grid of focus areas (Policy, Philosophy, Local Democracy). Wired into Home.tsx.

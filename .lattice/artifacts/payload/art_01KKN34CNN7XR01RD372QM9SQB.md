@@ -1,0 +1,1 @@
+Updated font hierarchy: Jacquard 24 → 'Fractal' wordmark only (inline style). Instrument Serif → headers/headings via --font-serif CSS var. JetBrains Mono → body/everything else via --font-sans. Updated Google Fonts import, CSS theme variables, and Hero.tsx. Typecheck passes.
