@@ -43,37 +43,41 @@ export function Navbar() {
         }`}
       >
         <div className="relative py-5 px-6 max-md:hidden">
-          <div className="flex items-center justify-center">
-            <a href="#" className="text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-[0.85] text-center" style={{ fontFamily: "'Jacquard 24', system-ui" }}>
-              Fractal<br />Collective
+          <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+            <nav className="flex items-center justify-end gap-2" style={{ transform: 'translateY(-20px)' }}>
+              {sectionLinks.slice(0, 4).map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="text-[11px] font-medium text-foreground/80 hover:text-foreground transition-colors px-3 py-1.5 rounded-full border border-border/50 hover:border-border hover:bg-secondary/50 whitespace-nowrap"
+                >
+                  {link.name}
+                </a>
+              ))}
+            </nav>
+
+            <a href="#" className="text-center leading-[0.85] tracking-tighter">
+              <span className="text-5xl md:text-6xl lg:text-7xl block" style={{ fontFamily: "'Jacquard 24', system-ui" }}>Fractal</span>
+              <span className="font-serif text-3xl md:text-4xl lg:text-5xl block italic">Collective</span>
             </a>
+
+            <nav className="flex items-center justify-start gap-2" style={{ transform: 'translateY(-20px)' }}>
+              {sectionLinks.slice(4).map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="text-[11px] font-medium text-foreground/80 hover:text-foreground transition-colors px-3 py-1.5 rounded-full border border-border/50 hover:border-border hover:bg-secondary/50 whitespace-nowrap"
+                >
+                  {link.name}
+                </a>
+              ))}
+            </nav>
           </div>
-          <nav className="absolute left-6 top-1/2 -translate-y-1/2 flex items-center gap-2">
-            {sectionLinks.slice(0, 4).map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-xs font-medium text-foreground/80 hover:text-foreground transition-colors px-3 py-1.5 rounded-full border border-border/50 hover:border-border hover:bg-secondary/50"
-              >
-                {link.name}
-              </a>
-            ))}
-          </nav>
-          <nav className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-2">
-            {sectionLinks.slice(4).map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-xs font-medium text-foreground/80 hover:text-foreground transition-colors px-3 py-1.5 rounded-full border border-border/50 hover:border-border hover:bg-secondary/50"
-              >
-                {link.name}
-              </a>
-            ))}
-          </nav>
         </div>
         <div className="md:hidden px-6 h-20 flex items-center justify-between">
-          <a href="#" className="text-2xl tracking-tight" style={{ fontFamily: "'Jacquard 24', system-ui" }}>
-            Fractal Collective
+          <a href="#" className="tracking-tight">
+            <span className="text-2xl" style={{ fontFamily: "'Jacquard 24', system-ui" }}>Fractal</span>{" "}
+            <span className="font-serif text-xl italic">Collective</span>
           </a>
           <button
             className="z-50 relative p-2 -mr-2 text-foreground"

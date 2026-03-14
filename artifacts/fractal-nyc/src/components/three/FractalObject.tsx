@@ -70,7 +70,7 @@ export function FractalObject({ imagePath }: { imagePath: string }) {
   });
 
   return (
-    <group ref={groupRef} position={[0, 0, 0]}>
+    <group ref={groupRef} position={[0, 0.35, 0]}>
       <IcosahedronLayer
         radius={1.8}
         emissiveColor="#bb8844"
