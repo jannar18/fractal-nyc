@@ -19,13 +19,14 @@ export function Navbar() {
   });
 
   const sectionLinks = [
+    { name: "The Protocol", href: "#the-protocol" },
     { name: "Neighborhood", href: "#neighborhood" },
     { name: "New Liberal Arts", href: "#new-liberal-arts" },
     { name: "A Campus", href: "#a-campus" },
     { name: "Events", href: "#events" },
     { name: "Political Club", href: "#political-club" },
-    { name: "Research + Publication", href: "#research-publication" },
-    { name: "The Protocol", href: "#the-protocol" },
+    { name: "Research + Writing", href: "#research-publication" },
+    { name: "Mission", href: "#mission" },
   ];
 
   return (
@@ -41,10 +42,10 @@ export function Navbar() {
           isScrolled ? "bg-background/90 backdrop-blur-md border-b border-border" : "bg-transparent"
         }`}
       >
-        <div className="relative py-5 px-6 max-md:hidden">
+        <div className="relative py-5 max-md:hidden" style={{ paddingLeft: '6%', paddingRight: '6%' }}>
           <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
-            <nav className="flex items-center justify-end gap-2" style={{ transform: 'translateY(-20px)' }}>
-              {sectionLinks.slice(0, 3).map((link) => (
+            <nav className="flex items-center justify-between" style={{ transform: 'translateY(-20px)' }}>
+              {sectionLinks.slice(0, 4).map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
@@ -60,8 +61,8 @@ export function Navbar() {
               <span className="font-serif text-3xl md:text-4xl lg:text-5xl block italic">Collective</span>
             </a>
 
-            <nav className="flex items-center justify-start gap-2" style={{ transform: 'translateY(-20px)' }}>
-              {sectionLinks.slice(3).map((link) => (
+            <nav className="flex items-center justify-between" style={{ transform: 'translateY(-20px)' }}>
+              {sectionLinks.slice(4).map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
