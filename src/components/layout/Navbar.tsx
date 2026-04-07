@@ -53,7 +53,6 @@ function NavLink({ name, href, color }: { name: string; href: string; color: str
 export function Navbar() {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [hasScrolledPast, setHasScrolledPast] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [location] = useLocation();
@@ -70,7 +69,6 @@ export function Navbar() {
     if (latest < 10) {
       setHasScrolledPast(false);
     }
-    setIsScrolled(latest > 50);
   });
 
   const leftLinks = sectionLinks.slice(0, 4);
@@ -87,9 +85,7 @@ export function Navbar() {
         }}
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${
-          isScrolled ? "backdrop-blur-md border-b border-border/30" : "bg-transparent"
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 bg-transparent"
       >
         {showFull ? (
           <>

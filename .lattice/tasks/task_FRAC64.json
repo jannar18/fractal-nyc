@@ -1,0 +1,10 @@
+{
+  "id": "task_FRAC64",
+  "short_code": "FRAC-64",
+  "title": "Navbar — remove glass effect, make fully transparent on scroll",
+  "description": "Remove the backdrop-blur and border that appear when scrolling. Navbar should be fully transparent at all times, no glass/blur effect.",
+  "status": "in_progress",
+  "priority": "high",
+  "created_at": "2026-04-07T22:55:00Z",
+  "updated_at": "2026-04-07T22:55:00Z"
+}
