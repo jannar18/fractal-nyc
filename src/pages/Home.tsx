@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { HouseBannerGrid } from "@/components/house/HouseBannerGrid";
+import { OctahedronUnfold } from "@/components/animation/OctahedronUnfold";
 import { Footer } from "@/components/layout/Footer";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { useEffect } from "react";
@@ -17,6 +18,7 @@ export function Home() {
     <main className="min-h-screen bg-background text-foreground selection:bg-foreground selection:text-background">
       <Navbar />
       <Hero />
+      <OctahedronUnfold />
       <HouseBannerGrid />
 
       {/* Golden Age Protocol */}
