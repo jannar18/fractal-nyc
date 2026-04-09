@@ -35,6 +35,9 @@ import {
   useTapHandlers,
   TAP_MOVE_PX,
   TAP_MAX_MS,
+  classifyGestureAxis,
+  AXIS_CLASSIFY_PX,
+  fractalObjectUserRotation,
 } from "@/components/three/OctahedronHero";
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -234,5 +237,63 @@ describe("useTapHandlers — gesture sequences", () => {
       );
     });
     expect(onTap).toHaveBeenCalledTimes(1);
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FRAC-142: Axis classifier — pure decision boundary for one-finger spin/scroll
+// ═══════════════════════════════════════════════════════════════════════════
+//
+// On mobile, one finger has to do double duty: drag-vertical = scroll the page,
+// drag-horizontal = spin the octahedron. The router waits until cumulative
+// movement crosses ~10px, then locks in an axis. These tests pin the threshold
+// and the tie-breaking rule so a future refactor can't silently regress mobile
+// UX without a test failure.
+
+describe("classifyGestureAxis — FRAC-142 axis routing", () => {
+  it("returns null below the 10px threshold", () => {
+    expect(classifyGestureAxis(0, 0)).toBeNull();
+    expect(classifyGestureAxis(3, 4)).toBeNull(); // hypot=5
+    expect(classifyGestureAxis(6, 6)).toBeNull(); // hypot≈8.49
+  });
+
+  it("returns 'horizontal' for a pure horizontal drag at threshold", () => {
+    expect(classifyGestureAxis(10, 0)).toBe("horizontal");
+    expect(classifyGestureAxis(-12, 0)).toBe("horizontal");
+    expect(classifyGestureAxis(20, 5)).toBe("horizontal"); // dx dominates
+  });
+
+  it("returns 'vertical' for a pure vertical drag at threshold", () => {
+    expect(classifyGestureAxis(0, 10)).toBe("vertical");
+    expect(classifyGestureAxis(0, -15)).toBe("vertical");
+    expect(classifyGestureAxis(5, 20)).toBe("vertical"); // dy dominates
+  });
+
+  it("breaks ties (|dx| === |dy|) toward horizontal — spin wins on diagonal", () => {
+    // 10/10 → hypot ≈ 14.14, well above the 10px threshold.
+    expect(classifyGestureAxis(10, 10)).toBe("horizontal");
+    expect(classifyGestureAxis(-10, 10)).toBe("horizontal");
+    expect(classifyGestureAxis(10, -10)).toBe("horizontal");
+  });
+
+  it("classifies as soon as the threshold is crossed (boundary)", () => {
+    // hypot=10 exactly should classify (>= threshold)
+    expect(classifyGestureAxis(10, 0)).not.toBeNull();
+    expect(classifyGestureAxis(0, 10)).not.toBeNull();
+  });
+
+  it("exposes the documented threshold matching the tap threshold", () => {
+    expect(AXIS_CLASSIFY_PX).toBe(10);
+    expect(AXIS_CLASSIFY_PX).toBe(TAP_MOVE_PX);
+  });
+});
+
+describe("fractalObjectUserRotation — shared mutable ref for spin offset", () => {
+  it("is a plain object with a mutable .current number", () => {
+    expect(typeof fractalObjectUserRotation.current).toBe("number");
+    const before = fractalObjectUserRotation.current;
+    fractalObjectUserRotation.current = before + 0.5;
+    expect(fractalObjectUserRotation.current).toBe(before + 0.5);
+    fractalObjectUserRotation.current = before; // restore for hygiene
   });
 });

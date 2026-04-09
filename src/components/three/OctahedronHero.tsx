@@ -24,6 +24,52 @@ import * as THREE from "three";
 export const TAP_MOVE_PX = 10;
 export const TAP_MAX_MS = 350;
 
+// ---------------------------------------------------------------------------
+// FRAC-142: Axis-based gesture detection for mobile spin + scroll
+// ---------------------------------------------------------------------------
+// FRAC-124 fixed scroll passthrough by routing one-finger interaction to the
+// browser (TOUCH.NONE). That killed Andrew's original ask: drag-to-spin the
+// hero. The user can't do BOTH spin AND scroll with one finger unless we
+// classify the drag axis within the first ~10px of movement and route
+// accordingly:
+//   * vertical drag → let browser scroll the page
+//   * horizontal drag → spin the octahedron around its Y axis
+//   * tap (< 10px move) → fall through to useTapHandlers on hit meshes
+//
+// The user-rotation offset is shared across modules via a tiny module-level
+// ref object. FractalCityScene's pointer handler writes to it; FractalObject's
+// useFrame reads it and adds it to the auto-rotation accumulator each frame.
+// A plain object (not React state) avoids re-renders on every drag pixel.
+
+/**
+ * Module-level mutable ref shared between FractalCityScene's pointer handler
+ * and FractalObject's useFrame. The pointer handler accumulates radians here;
+ * FractalObject reads it each frame and adds it to its own auto-rotation
+ * accumulator.
+ */
+export const fractalObjectUserRotation = { current: 0 };
+
+/** Tunable: radians of Y-rotation per pixel of horizontal drag. */
+export const SPIN_RADIANS_PER_PX = 0.01;
+
+/** Pixel threshold before we commit to an axis classification. Matches TAP_MOVE_PX. */
+export const AXIS_CLASSIFY_PX = 10;
+
+export type GestureAxis = "horizontal" | "vertical" | null;
+
+/**
+ * Pure axis classifier. Returns:
+ *   - null while the cumulative move is below the classification threshold
+ *   - "horizontal" if |dx| >= |dy| at threshold
+ *   - "vertical" if |dy| > |dx| at threshold
+ *
+ * Exported for unit tests so the threshold and tie-breaking are locked in.
+ */
+export function classifyGestureAxis(dx: number, dy: number): GestureAxis {
+  if (Math.hypot(dx, dy) < AXIS_CLASSIFY_PX) return null;
+  return Math.abs(dy) > Math.abs(dx) ? "vertical" : "horizontal";
+}
+
 export interface TapState {
   x: number;
   y: number;
@@ -657,15 +703,21 @@ export function FractalObject({
   onNavigate: (route: string) => void;
 }) {
   const groupRef = useRef<THREE.Group>(null);
+  const autoY = useRef(0);
 
   const outerVerts = useMemo(() => makeOctahedronVertices(1.7), []);
   const innerVerts = useMemo(() => makeOctahedronVertices(1.1), []);
 
-  // Slow auto-rotation — Y-axis only so it stays vertical
+  // Slow auto-rotation — Y-axis only so it stays vertical.
+  // FRAC-142: track auto-rotation in an internal ref and SET (not +=) the
+  // group's rotation each frame as autoY + user-driven offset. This lets the
+  // FractalCityScene pointer handler add radians to fractalObjectUserRotation
+  // and have the spin take immediate effect without fighting the auto-rotation.
   useFrame((_, delta) => {
     if (groupRef.current) {
       const d = Math.min(delta, 0.05);
-      groupRef.current.rotation.y += d * 0.12;
+      autoY.current += d * 0.12;
+      groupRef.current.rotation.y = autoY.current + fractalObjectUserRotation.current;
     }
   });
 
