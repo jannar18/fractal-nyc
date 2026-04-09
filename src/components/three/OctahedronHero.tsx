@@ -1,4 +1,4 @@
-import { useRef, useMemo, useState } from "react";
+import { useRef, useMemo, useState, Suspense } from "react";
 import { useFrame, useLoader, ThreeEvent } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import * as THREE from "three";
@@ -614,8 +614,14 @@ export function FractalObject({
         opacity={0.65}
       />
 
-      {/* Center octahedron with per-face section textures */}
-      <CenterOctahedron onNavigate={onNavigate} />
+      {/* Center octahedron with per-face section textures.
+          Wrapped in a nested Suspense boundary so that banner texture loading
+          (via useLoader inside CenterOctahedron) does NOT blank the entire
+          scene — wireframes, edge lines, nav nodes, and streaming text tubes
+          all render in frame 0 while the center textures stream in. */}
+      <Suspense fallback={null}>
+        <CenterOctahedron onNavigate={onNavigate} />
+      </Suspense>
 
       {/* 6 house nav nodes on outer octahedron vertices */}
       {OUTER_NAV_NODES.map((node) => (
