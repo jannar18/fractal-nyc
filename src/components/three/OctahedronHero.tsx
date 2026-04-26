@@ -95,10 +95,8 @@ export function useTapHandlers(onTap: () => void) {
 }
 
 // ---------------------------------------------------------------------------
-// Nav node definitions — 5 visible houses on octahedron vertices
+// Nav node definitions — 6 houses on octahedron vertices
 // ---------------------------------------------------------------------------
-// FRAC-5 / FRAC-161: Political Club is hidden from the hero nav. The 6-vertex
-// octahedron still has a vertex at index 4 — we simply leave it unpopulated.
 
 interface NavNode {
   label: string;
@@ -112,6 +110,7 @@ const OUTER_NAV_NODES: NavNode[] = [
   { label: "Events",        route: "/events",           color: "#D4857A", vertexIndex: 2 },
   { label: "Campus",        route: "/campus",           color: "#2B5A48", vertexIndex: 0 },
   { label: "Education",     route: "/new-liberal-arts", color: "#C41E20", vertexIndex: 1 },
+  { label: "Forum",         route: "/political-club",   color: "#6B8CAE", vertexIndex: 4 },
   { label: "Publications",  route: "/lab",              color: "#E870A0", vertexIndex: 5 },
 ];
 
@@ -355,31 +354,26 @@ function StreamingCrossConnections({
 // Per-face section definitions for the center octahedron
 // ---------------------------------------------------------------------------
 
-// Banner images — per visible section.
-// FRAC-5: `forum` (Political Club) is hidden from nav, so we skip its banner
-// and fall back to a desaturated solid color on that face. Geometry stays
-// intact (8 triangular faces); only the visual treatment changes.
 const FACE_BANNER_IMAGES: Record<string, string> = {
   story:        "/images/banners/story.jpeg",
   campus:       "/images/banners/campus.jpeg",
   neighborhood: "/images/banners/neighborhood.jpeg",
   events:       "/images/banners/events.jpeg",
   school:       "/images/banners/new-liberal-arts.jpeg",
+  forum:        "/images/banners/political-club.jpeg",
   lab:          "/images/banners/lab.jpeg",
   people:       "/images/banners/people.jpeg",
 };
 
-// Section colors. `forum` is intentionally desaturated (muted grey-tan) to
-// read as de-emphasized — it has no nav node and no banner texture.
 const FACE_SECTION_COLORS: Record<string, string> = {
-  story:        "#D4BA58",
-  campus:       "#2B5A48",
-  neighborhood: "#889460",
-  events:       "#D4857A",
-  school:       "#C41E20",
-  forum:        "#8a7a6a",
-  lab:          "#E870A0",
-  people:       "#C49040",
+  story:        "#F0DFA0",
+  campus:       "#70B898",
+  neighborhood: "#C0CC90",
+  events:       "#F0B8B0",
+  school:       "#E86868",
+  forum:        "#90B8D8",
+  lab:          "#F8A8C8",
+  people:       "#E8C080",
 };
 
 // Map octahedron face index → section key (8 faces, 8 unique sections)
