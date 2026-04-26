@@ -110,7 +110,6 @@ const OUTER_NAV_NODES: NavNode[] = [
   { label: "Events",        route: "/events",           color: "#D4857A", vertexIndex: 2 },
   { label: "Campus",        route: "/campus",           color: "#2B5A48", vertexIndex: 0 },
   { label: "Education",     route: "/new-liberal-arts", color: "#C41E20", vertexIndex: 1 },
-  { label: "Forum",         route: "/political-club",   color: "#6B8CAE", vertexIndex: 4 },
   { label: "Publications",  route: "/lab",              color: "#E870A0", vertexIndex: 5 },
 ];
 
