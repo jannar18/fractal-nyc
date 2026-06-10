@@ -1,15 +1,13 @@
 /* FRAC-178: narrowed Google Fonts URL to ship only the weights actually
    used at runtime. Fraunces collapsed from 100..900 to 300..500 (no
    font-bold/semibold/extrabold/black usage with font-serif anywhere in
-   src/). Inter trimmed to 300;400;500 — note that `font-semibold` (600)
-   is still used in shadcn UI primitives and Campus.tsx; those will fall
-   back to faux-bold rendering from the 500 face. Accepted as a
-   deliberate trade for the ~hundred-KB savings on the critical-path
-   font payload; if faux-bold renders poorly, either add `;600` back
-   here or migrate the offending callsites to `font-medium`.
+   src/). Inter trimmed from 300..700 to 300;400;500;600 (font-semibold
+   is used in shadcn UI primitives — dialogs, dropdowns, toasts —
+   keeping 600 prevents faux-bold rendering on those surfaces; the
+   weight is only downloaded on-demand when those components mount).
    JetBrains Mono collapsed from 100..700 to 100;400;500 (no bolder
    weights in use). */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Inter:wght@300;400;500&family=Jacquard+24&family=JetBrains+Mono:wght@100;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Inter:wght@300;400;500;600&family=Jacquard+24&family=JetBrains+Mono:wght@100;400;500&display=swap');
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
