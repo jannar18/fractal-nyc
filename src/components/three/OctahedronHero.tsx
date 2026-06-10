@@ -4,6 +4,13 @@ import { Html } from "@react-three/drei";
 import * as THREE from "three";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { HOUSES } from "@/data/houses";
+// FRAC-178: OUTER_NAV_NODES lives in heroNavNodes.ts (three-free) so
+// Hero.tsx can import it without dragging three-vendor onto the entry
+// chunk. Imported here for internal use (the rendering loop near the
+// bottom of this file) and re-exported for back-compat with any caller
+// still importing it from OctahedronHero.
+import { OUTER_NAV_NODES } from "./heroNavNodes";
+export { OUTER_NAV_NODES };
 
 // FRAC-24: House color helper — derives from canonical palette pair in
 // HOUSES instead of literal hex. Falls back to magenta to surface a missing
@@ -111,22 +118,9 @@ interface NavNode {
   vertexIndex: number;
 }
 
-// FRAC-33: exported so the FractalCityScene wrapper can render a
-// keyboard-accessible skip-nav with the same routes (a parallel path
-// for keyboard users, since the 3D nav nodes are pointer-only).
-export const OUTER_NAV_NODES: NavNode[] = [
-  { label: "Visit",          route: "/neighborhood",     color: housePalette("neighborhood"), vertexIndex: 3 },
-  { label: "Events",         route: "/events",           color: housePalette("events"),       vertexIndex: 2 },
-  { label: "Campus",         route: "/campus",           color: housePalette("campus"),       vertexIndex: 0 },
-  { label: "Education",      route: "/new-liberal-arts", color: housePalette("school"),       vertexIndex: 1 },
-  { label: "Publications",   route: "/lab",              color: housePalette("lab"),          vertexIndex: 5 },
-  // FRAC-47: Story nav node at vertex 4 — fully active, navigates to /story.
-  // Replaces the FRAC-36 Political Club "Coming Soon" placeholder (Political
-  // Club stays hidden from Navbar per FRAC-161). Color matches Navbar Story
-  // link and StoryPage STORY_COLOR (#D4BA58); Story is not a House so the
-  // hex is literal rather than a palette ref.
-  { label: "Story",          route: "/story",            color: "#D4BA58",                       vertexIndex: 4 },
-];
+// FRAC-178: OUTER_NAV_NODES moved to ./heroNavNodes (three-free) and
+// re-exported at the top of this file. See heroNavNodes.ts for the
+// data + FRAC-33 / FRAC-47 historical context.
 
 // ---------------------------------------------------------------------------
 // Octahedron vertex generation

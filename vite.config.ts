@@ -6,23 +6,30 @@ import fs from "node:fs";
 
 /**
  * Inline plugin: after the build finishes, read `dist/.vite/manifest.json`,
- * walk the entry chunk plus the FractalCityScene dynamic import chunk's
- * transitive static imports, and produce TWO outputs from the same walk:
+ * walk the entry chunk's transitive static imports, and produce TWO
+ * outputs from the same walk:
  *
  *   1. Inject `<link rel="modulepreload">` tags into `dist/index.html` so
  *      the browser starts fetching chunks during HTML parse (rather than
- *      waiting for the entry script to parse and execute `lazy()`). The
- *      three-vendor chunk is discovered via the manifest — no hardcoded
- *      filenames. (FRAC-147)
+ *      waiting for the entry script to parse and execute `lazy()`).
+ *      (FRAC-147)
  *
  *   2. Emit `dist/_headers` with `Link: rel=preload` entries for the same
- *      manifest-walked chunks plus a static `as=image` preload for
- *      `hero-poster.jpg`. On Netlify these land as HTTP response headers,
- *      which arrive earlier in the critical path than in-HTML preload
- *      tags. On Netlify Pro, the platform auto-converts them into 103
- *      Early Hints that fire BEFORE the HTML 200 response. On the free
- *      tier the same headers still work — they just arrive with the 200.
- *      (FRAC-146)
+ *      manifest-walked chunks. On Netlify these land as HTTP response
+ *      headers, which arrive earlier in the critical path than in-HTML
+ *      preload tags. On Netlify Pro, the platform auto-converts them
+ *      into 103 Early Hints that fire BEFORE the HTML 200 response. On
+ *      the free tier the same headers still work — they just arrive
+ *      with the 200. (FRAC-146)
+ *
+ * FRAC-178: the FractalCityScene dynamic chunk (and its transitive
+ * three-vendor dep) is NOT included in either output. Preloading the
+ * ~900KB three-vendor on first paint pushed mobile 3G DCL to 13s+. The
+ * dynamic boundary is kept truly lazy; the SVG placeholder in
+ * src/components/three/HeroPlaceholder.tsx covers the visual gap until
+ * WebGL hydrates after the page is interactive.
+ * Same task removed the dist/_headers hero-poster.jpg preload, which
+ * pointed at a file that never shipped (guaranteed 404 per request).
  *
  * The HTML tags and `_headers` Link entries are derived from the SAME
  * `wanted` Set inside this hook so they cannot drift. If a future refactor
@@ -77,12 +84,17 @@ function injectModulePreload(): Plugin {
       const entryKey = Object.keys(manifest).find((k) => manifest[k].isEntry);
       if (entryKey) visit(entryKey);
 
-      // Pull in the dynamic FractalCityScene chunk + its transitive static
-      // imports (which will include three-vendor once we split it).
-      const sceneKey = Object.keys(manifest).find(
-        (k) => manifest[k].isDynamicEntry && k.includes("FractalCityScene"),
-      );
-      if (sceneKey) visit(sceneKey);
+      // FRAC-178: deliberately do NOT preload FractalCityScene or its
+      // transitive three-vendor chunk. FRAC-146/147 originally seeded
+      // the walk from the FractalCityScene dynamic entry to shave time
+      // off WebGL hydration, but on 3G mobile the ~900KB three-vendor
+      // chunk dragged onto the critical path pushed DOMContentLoaded to
+      // 13s+. Keeping the dynamic boundary truly lazy lets the entry
+      // chunk paint fast; the heavy 3D scene hydrates after the page
+      // is interactive. HeroPlaceholder.tsx (statically imported in
+      // Hero.tsx) covers the visual gap. If reintroducing preload, gate
+      // it on a non-mobile / non-slow-net signal — never re-enable
+      // unconditionally.
 
       // Build the modulepreload tags. Skip the entry itself — Vite already
       // emits a <script type="module"> for it.
@@ -138,7 +150,8 @@ function injectModulePreload(): Plugin {
 
       // -----------------------------------------------------------------
       // FRAC-146: Emit dist/_headers with Link: rel=preload entries for
-      // the same manifest-walked chunks, plus hero-poster.jpg.
+      // the same manifest-walked chunks. (FRAC-178 removed the
+      // hero-poster.jpg image preload that previously also lived here.)
       //
       // NOTE on dedupe divergence from the HTML branch above:
       // The HTML branch uses `newFiles` — a set filtered to exclude chunks
@@ -167,19 +180,16 @@ function injectModulePreload(): Plugin {
       const scriptLinks = preloadFiles
         .map((f) => `  Link: </${f}>; rel=preload; as=script; crossorigin`)
         .join("\n");
-      // hero-poster.jpg is a static public/ asset (NOT in the Rollup
-      // manifest), hardcoded here. If FRAC-145's poster path ever
-      // changes, update this line to match. See
-      // src/components/sections/Hero.tsx (the <img> tag rendered before
-      // FractalCityScene mounts) for the source of truth on the path.
-      // No `crossorigin` on the image preload: the <img> tag has no
-      // crossorigin attribute, so adding it here would cause a
-      // double-fetch.
-      const imageLink = `  Link: </images/hero-poster.jpg>; rel=preload; as=image`;
-      const headersBody = `/*\n${scriptLinks}\n${imageLink}\n`;
+      // FRAC-178: removed hero-poster.jpg Link header. The file
+      // public/images/hero-poster.jpg never existed, so this header was
+      // emitting a guaranteed 404 on every request — wasting a round
+      // trip before the browser discovered the asset wasn't there. If a
+      // hero poster image is reintroduced, add the preload back AFTER
+      // confirming the file actually ships in dist/images/.
+      const headersBody = `/*\n${scriptLinks}\n`;
       fs.writeFileSync(headersPath, headersBody);
       this.info(
-        `[inject-modulepreload] Wrote dist/_headers with ${preloadFiles.length} script preload(s) + 1 image preload.`,
+        `[inject-modulepreload] Wrote dist/_headers with ${preloadFiles.length} script preload(s).`,
       );
     },
   };
