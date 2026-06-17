@@ -34,15 +34,15 @@ const CATEGORY_META: Record<
 const LAB_DEEP = HOUSES.find((h) => h.id === "lab")!.palette.deep;
 
 // ---------------------------------------------------------------------------
-// DocumentBadge
+// DocumentCard
 // ---------------------------------------------------------------------------
 
-interface DocumentBadgeProps {
+interface DocumentCardProps {
   document: LabDocument;
   className?: string;
 }
 
-export function DocumentBadge({ document, className = "" }: DocumentBadgeProps) {
+export function DocumentCard({ document, className = "" }: DocumentCardProps) {
   const { icon: CategoryIcon, label: categoryLabel } =
     CATEGORY_META[document.category];
   const authorName = formatAuthors(document.authors);
