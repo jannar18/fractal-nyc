@@ -2,3 +2,4 @@
 {"actor":"agent:claude-opus-cleanup","data":{"from":"backlog","to":"in_planning"},"id":"ev_01KVCQJYSEB9QYP5T1SC6EP9NW","schema_version":1,"task_id":"task_01KVCQJYK3ZPTJKQPPXEB7HJHK","ts":"2026-06-18T06:44:37Z","type":"status_changed"}
 {"actor":"agent:claude-opus-cleanup","data":{"from":"in_planning","to":"planned"},"id":"ev_01KVCQJYVTRZHTFEVDFEJTHZRJ","schema_version":1,"task_id":"task_01KVCQJYK3ZPTJKQPPXEB7HJHK","ts":"2026-06-18T06:44:37Z","type":"status_changed"}
 {"actor":"agent:claude-opus-cleanup","data":{"from":"planned","to":"in_progress"},"id":"ev_01KVCQJYY3F3C5TG20MW1A66M0","schema_version":1,"task_id":"task_01KVCQJYK3ZPTJKQPPXEB7HJHK","ts":"2026-06-18T06:44:37Z","type":"status_changed"}
+{"actor":"agent:claude-opus-cleanup","data":{"from":"in_progress","to":"review"},"id":"ev_01KVCQXGMM6P8TM735D4S1FHF5","schema_version":1,"task_id":"task_01KVCQJYK3ZPTJKQPPXEB7HJHK","ts":"2026-06-18T06:50:23Z","type":"status_changed"}
