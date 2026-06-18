@@ -1,26 +1,32 @@
 {
   "assigned_to": null,
   "branch_links": [],
-  "comment_count": 0,
+  "comment_count": 1,
   "complexity": null,
   "created_at": "2026-06-18T06:06:15Z",
   "created_by": "agent:claude-opus-cleanup",
   "custom_fields": {},
   "description": null,
-  "done_at": null,
-  "evidence_refs": [],
+  "done_at": "2026-06-18T06:08:38Z",
+  "evidence_refs": [
+    {
+      "id": "ev_01KVCNH26MXW1N2Y5Z7XDSQSTE",
+      "role": "review",
+      "source_type": "comment"
+    }
+  ],
   "id": "task_01KVCNCP2SG486MB2N14ARSXM7",
-  "last_event_id": "ev_01KVCNGSKRQYFN1PFR2EYVSK3Q",
-  "last_status_changed_at": "2026-06-18T06:08:29Z",
+  "last_event_id": "ev_01KVCNH28Z84EBK6ZESD38V34T",
+  "last_status_changed_at": "2026-06-18T06:08:38Z",
   "priority": "medium",
   "relationships_out": [],
   "reopened_count": 0,
   "schema_version": 1,
   "short_id": "FRAC-229",
-  "status": "in_progress",
+  "status": "done",
   "tags": null,
   "title": "Delete research/ folder (pretext research)",
   "type": "task",
-  "updated_at": "2026-06-18T06:08:29Z",
+  "updated_at": "2026-06-18T06:08:38Z",
   "urgency": null
 }

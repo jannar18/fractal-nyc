@@ -1,26 +1,32 @@
 {
   "assigned_to": null,
   "branch_links": [],
-  "comment_count": 0,
+  "comment_count": 1,
   "complexity": null,
   "created_at": "2026-06-18T06:06:15Z",
   "created_by": "agent:claude-opus-cleanup",
   "custom_fields": {},
   "description": null,
-  "done_at": null,
-  "evidence_refs": [],
+  "done_at": "2026-06-18T06:08:38Z",
+  "evidence_refs": [
+    {
+      "id": "ev_01KVCNH2DPBZEZZPN0JJCPKHSB",
+      "role": "review",
+      "source_type": "comment"
+    }
+  ],
   "id": "task_01KVCNCP7CZBB5JJQM3M5BX7G9",
-  "last_event_id": "ev_01KVCNGSTP27A5A7DAT57JFCFK",
-  "last_status_changed_at": "2026-06-18T06:08:30Z",
+  "last_event_id": "ev_01KVCNH2G0M3X9CR4XTBAWHZJ0",
+  "last_status_changed_at": "2026-06-18T06:08:38Z",
   "priority": "medium",
   "relationships_out": [],
   "reopened_count": 0,
   "schema_version": 1,
   "short_id": "FRAC-231",
-  "status": "in_progress",
+  "status": "done",
   "tags": null,
   "title": "Clear out notes/ directory",
   "type": "task",
-  "updated_at": "2026-06-18T06:08:30Z",
+  "updated_at": "2026-06-18T06:08:38Z",
   "urgency": null
 }
