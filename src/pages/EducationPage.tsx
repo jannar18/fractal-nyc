@@ -1,11 +1,11 @@
 import type { CSSProperties } from "react";
 import { Navbar } from "@/components/layout/Navbar";
-import { LiberalArts } from "@/components/sections/LiberalArts";
+import { Education } from "@/components/sections/Education";
 import { Footer } from "@/components/layout/Footer";
 import { FractalPattern } from "@/components/ui/FractalPattern";
 import { EducationBannerSVG } from "@/components/house/EducationBannerSVG";
 
-export function LiberalArtsPage() {
+export function EducationPage() {
   return (
     <main
       className="btn-on-dark relative min-h-screen bg-house-education-deep text-background selection:bg-foreground selection:text-background"
@@ -27,7 +27,7 @@ export function LiberalArtsPage() {
           </div>
         </div>
         <div className="relative z-10">
-          <LiberalArts />
+          <Education />
         </div>
         {/* Mobile-only flanking pennants — bold moment before the footer.
             Desktop uses the absolute `hidden md:flex` layer above; this block is

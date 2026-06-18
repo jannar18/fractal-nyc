@@ -8,7 +8,7 @@ import { MandelbrotCorners } from "@/components/ui/MandelbrotCorners";
 import { Button } from "@/components/ui/button";
 import { VisitBannerSVG } from "@/components/house/VisitBannerSVG";
 
-export function NeighborhoodPage() {
+export function VisitPage() {
   return (
     <main
       className="relative min-h-screen bg-house-visit-light text-foreground selection:bg-foreground selection:text-background"

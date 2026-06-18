@@ -144,7 +144,7 @@ Each house has an internal data-model `id` (used in routes and `src/data/houses.
 
 `HOUSES[id].palette: { light, deep }` in `src/data/houses.ts` is the single source of truth for house color, and each house has exactly two colors — the pair is the unit.
 
-**Scope:** house colors live on their own house's pages. On a house's page, its pair may color display headings, the monogram letter, eyebrows, focus rings, and chrome. Most houses use `{light}` as the page background and `{deep}` as the accent; **Political Club and Education invert** (page background `{deep}`, accent `{light}`) — a per-page decision applied in `PoliticalClubPage.tsx` and `LiberalArtsPage.tsx`. Each house's per-page banner SVG (see [Components](#components)) likewise draws from the house pair.
+**Scope:** house colors live on their own house's pages. On a house's page, its pair may color display headings, the monogram letter, eyebrows, focus rings, and chrome. Most houses use `{light}` as the page background and `{deep}` as the accent; **Political Club and Education invert** (page background `{deep}`, accent `{light}`) — a per-page decision applied in `PoliticalClubPage.tsx` and `EducationPage.tsx`. Each house's per-page banner SVG (see [Components](#components)) likewise draws from the house pair.
 
 ### Non-house section colors
 
@@ -177,7 +177,7 @@ Secondary / supporting text uses `text-foreground-muted` (`#525252`), not `foreg
 
 Set the text color explicitly on the same node as the surface. A nested cream surface inside a house page re-asserts `text-foreground` on the inner surface, so text always pairs with its actual background rather than inheriting from the page cascade.
 
-**Known concern:** the Publications page (`LabPage`) floods `bg-house-publications-light` (`#E870A0`, a bright pink) under cream `text-background`. Cream-on-pink is a borderline-contrast pairing worth a revisit.
+**Known concern:** the Publications page (`PublicationsPage`) floods `bg-house-publications-light` (`#E870A0`, a bright pink) under cream `text-background`. Cream-on-pink is a borderline-contrast pairing worth a revisit.
 
 ## Typography
 
@@ -289,7 +289,7 @@ Radii map to semantic roles, not arbitrary sizes:
 | Class | Role | Example |
 |---|---|---|
 | `rounded-sm` | images | `GalleryImage` |
-| `rounded-md` | interactive controls (buttons, inputs, dropdowns, navbar menu buttons) and containers (note cards, embeds) | `button.tsx`, Hero combobox, `NeighborhoodPage` note |
+| `rounded-md` | interactive controls (buttons, inputs, dropdowns, navbar menu buttons) and containers (note cards, embeds) | `button.tsx`, Hero combobox, `VisitPage` note |
 | `rounded-lg` | cards | `DocumentBadge`, `ArchiveSearch`, Story TalkCard |
 | `rounded-full` | pill shapes: tag-filter pills and accent bars | `TagFilter`, accent bars |
 
@@ -301,9 +301,9 @@ Borders resolve to one of three semantic tiers — pick by intent, not by eye:
 
 | Tier | Value | Role | Example sites |
 |---|---|---|---|
-| **Structural** | `border-foreground-faint` | Default frames, dividers, hairlines. The sitewide default (`* { border-foreground-faint }`). | footer divider, lab cards (`DocumentBadge`, `ArchiveSearch`, Story TalkCard), Navbar menu-row dividers, LabPage section rule |
+| **Structural** | `border-foreground-faint` | Default frames, dividers, hairlines. The sitewide default (`* { border-foreground-faint }`). | footer divider, publications cards (`DocumentBadge`, `ArchiveSearch`, Story TalkCard), Navbar menu-row dividers, PublicationsPage section rule |
 | **Definition** | `border-foreground/20` | A defining container edge on cream, without emphasis. | Hero search input + results dropdown, Hero keyboard-nav popover |
-| **Emphasis** | `[border-color:var(--accent,currentColor)]` | Themed house/section accent border — the same accent the button uses. For containers that want to carry the house color. Inherits `--accent` (set per page on `<main>`); falls back to `currentColor`. | `button-default`, Visit "Note" card (`NeighborhoodPage`), Events Luma embed (`EventsPage`) |
+| **Emphasis** | `[border-color:var(--accent,currentColor)]` | Themed house/section accent border — the same accent the button uses. For containers that want to carry the house color. Inherits `--accent` (set per page on `<main>`); falls back to `currentColor`. | `button-default`, Visit "Note" card (`VisitPage`), Events Luma embed (`EventsPage`) |
 
 The `--accent` custom property (renamed from the former button-accent var in FRAC-215) is set on each page's `<main>` to that page's house/section color and read by both the button and the Emphasis-tier borders. Focus/hover states (e.g. the Hero input's `focus:border-foreground/40`, the lab `focus:border-house-publications-deep/60`) sit deliberately outside this resting-tier vocabulary — they are transient states, not resting borders.
 
@@ -338,7 +338,7 @@ Five components are modeled in the `components:` YAML block; the rest are descri
 
 **`button-link`** — inline text action for sitting inside prose. Zero padding, `underline underline-offset-4`, hover `text-foreground/80`.
 
-**`house-banner-svg`** — the per-page pennant banner. Each of the five surfaced houses ships its own baked-art SVG component (`VisitBannerSVG`, `EventsBannerSVG`, `CampusBannerSVG`, `EducationBannerSVG`, `PublicationsBannerSVG`), rendered as a plain `<img>` of `/images/banners/*-banner.svg`. The pennant shape, the house-colored fill, the Mandelbrot pocket, the arc tagline, and the Jacquard 24 monogram are all baked into the SVG — there is no runtime theming. A house page flanks its content with a pair of its banner (an absolute `hidden md:flex` layer on desktop, a `flex md:hidden` in-flow pair on mobile; see `NeighborhoodPage.tsx`). The YAML entry encodes the Visit pair as a representative example. **Political Club has no banner SVG** — it is unsurfaced at launch.
+**`house-banner-svg`** — the per-page pennant banner. Each of the five surfaced houses ships its own baked-art SVG component (`VisitBannerSVG`, `EventsBannerSVG`, `CampusBannerSVG`, `EducationBannerSVG`, `PublicationsBannerSVG`), rendered as a plain `<img>` of `/images/banners/*-banner.svg`. The pennant shape, the house-colored fill, the Mandelbrot pocket, the arc tagline, and the Jacquard 24 monogram are all baked into the SVG — there is no runtime theming. A house page flanks its content with a pair of its banner (an absolute `hidden md:flex` layer on desktop, a `flex md:hidden` in-flow pair on mobile; see `VisitPage.tsx`). The YAML entry encodes the Visit pair as a representative example. **Political Club has no banner SVG** — it is unsurfaced at launch.
 
 ### Prose-only
 

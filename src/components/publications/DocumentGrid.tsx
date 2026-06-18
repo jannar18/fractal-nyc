@@ -3,8 +3,8 @@ import { DocumentCard } from "./DocumentCard";
 import {
   getFeaturedDocuments,
   getRegularDocuments,
-  type LabDocument,
-} from "@/data/lab-documents";
+  type PublicationDocument,
+} from "@/data/publications-documents";
 
 // ---------------------------------------------------------------------------
 // DocumentGrid
@@ -13,7 +13,7 @@ import {
 interface DocumentGridProps {
   /** Optional override — when provided, renders these docs instead of the
    *  default featured/regular split. Used by the archive filter. */
-  documents?: LabDocument[];
+  documents?: PublicationDocument[];
 }
 
 export function DocumentGrid({ documents }: DocumentGridProps) {

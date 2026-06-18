@@ -23,7 +23,7 @@ export type DocumentCategory =
  * surfaced (e.g. search subtitle). Multi-author bylines are rendered via
  * `formatAuthors`.
  */
-export interface LabDocument {
+export interface PublicationDocument {
   id: string;
   title: string;
   /** Person IDs from PEOPLE. Non-empty; `authors[0]` is primary / credit order. */
@@ -39,7 +39,7 @@ export interface LabDocument {
 // Documents
 // ---------------------------------------------------------------------------
 
-export const LAB_DOCUMENTS: LabDocument[] = [
+export const PUBLICATION_DOCUMENTS: PublicationDocument[] = [
   // ---- Regular documents ----
   {
     id: "unblocked-podcast",
@@ -352,19 +352,19 @@ export const LAB_DOCUMENTS: LabDocument[] = [
 // ---------------------------------------------------------------------------
 
 /** Return all featured documents. */
-export function getFeaturedDocuments(): LabDocument[] {
-  return LAB_DOCUMENTS.filter((d) => d.featured);
+export function getFeaturedDocuments(): PublicationDocument[] {
+  return PUBLICATION_DOCUMENTS.filter((d) => d.featured);
 }
 
 /** Return all non-featured documents. */
-export function getRegularDocuments(): LabDocument[] {
-  return LAB_DOCUMENTS.filter((d) => !d.featured);
+export function getRegularDocuments(): PublicationDocument[] {
+  return PUBLICATION_DOCUMENTS.filter((d) => !d.featured);
 }
 
 /** Return a sorted array of all unique tags across all documents. */
 export function getAllTags(): string[] {
   const tagSet = new Set<string>();
-  for (const doc of LAB_DOCUMENTS) {
+  for (const doc of PUBLICATION_DOCUMENTS) {
     for (const tag of doc.tags) {
       tagSet.add(tag);
     }
@@ -375,7 +375,7 @@ export function getAllTags(): string[] {
 /** Return a map of tag → count of documents that have that tag. */
 export function getTagCounts(): Map<string, number> {
   const counts = new Map<string, number>();
-  for (const doc of LAB_DOCUMENTS) {
+  for (const doc of PUBLICATION_DOCUMENTS) {
     for (const tag of doc.tags) {
       counts.set(tag, (counts.get(tag) ?? 0) + 1);
     }

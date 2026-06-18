@@ -1,26 +1,32 @@
 {
   "assigned_to": null,
   "branch_links": [],
-  "comment_count": 0,
+  "comment_count": 1,
   "complexity": null,
   "created_at": "2026-06-18T06:06:15Z",
   "created_by": "agent:claude-opus-cleanup",
   "custom_fields": {},
   "description": null,
-  "done_at": null,
-  "evidence_refs": [],
+  "done_at": "2026-06-18T06:12:22Z",
+  "evidence_refs": [
+    {
+      "id": "ev_01KVCNQWSGWRJ4AZ3SY3Y9EMSZ",
+      "role": "review",
+      "source_type": "comment"
+    }
+  ],
   "id": "task_01KVCNCP53ZFJTK6J0J1B2VA7Y",
-  "last_event_id": "ev_01KVCNQM21XGHWSJ36NYGYXRQ0",
-  "last_status_changed_at": "2026-06-18T06:12:13Z",
+  "last_event_id": "ev_01KVCNQWVTDS33DE13V38PCH54",
+  "last_status_changed_at": "2026-06-18T06:12:22Z",
   "priority": "medium",
   "relationships_out": [],
   "reopened_count": 0,
   "schema_version": 1,
   "short_id": "FRAC-230",
-  "status": "in_progress",
+  "status": "done",
   "tags": null,
   "title": "Clean unreferenced/unrendered files from public/ and public/images/",
   "type": "task",
-  "updated_at": "2026-06-18T06:12:13Z",
+  "updated_at": "2026-06-18T06:12:22Z",
   "urgency": null
 }

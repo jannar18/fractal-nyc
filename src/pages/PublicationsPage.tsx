@@ -4,13 +4,13 @@ import { Footer } from "@/components/layout/Footer";
 import { SectorHeader } from "@/components/layout/SectorHeader";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { MandelbrotIcon } from "@/components/house/MandelbrotIcon";
-import { DocumentGrid } from "@/components/lab/DocumentGrid";
-import { ArchiveToolbar } from "@/components/lab/ArchiveToolbar";
+import { DocumentGrid } from "@/components/publications/DocumentGrid";
+import { ArchiveToolbar } from "@/components/publications/ArchiveToolbar";
 import { useArchiveFilter } from "@/hooks/use-archive-filter";
 import { FractalPattern } from "@/components/ui/FractalPattern";
 import { PublicationsBannerSVG } from "@/components/house/PublicationsBannerSVG";
 
-export function LabPage() {
+export function PublicationsPage() {
   const filter = useArchiveFilter();
   return (
     <main

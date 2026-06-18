@@ -5,7 +5,7 @@
 
 /**
  * Display labels for lab document tags.
- * Keys must match the tag strings used in LAB_DOCUMENTS.
+ * Keys must match the tag strings used in PUBLICATION_DOCUMENTS.
  * Any tag not listed here falls back to title-cased slug.
  */
 export const TAG_LABELS: Record<string, string> = {

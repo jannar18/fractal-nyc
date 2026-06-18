@@ -17,17 +17,17 @@ vi.mock("@/components/house/MandelbrotIcon", () => ({
   ),
 }));
 
-import { NeighborhoodPage } from "@/pages/NeighborhoodPage";
+import { VisitPage } from "@/pages/VisitPage";
 
 // ---------------------------------------------------------------------------
 // Helper
 // ---------------------------------------------------------------------------
 
 function renderNeighborhood() {
-  const { hook } = memoryLocation({ path: "/neighborhood", static: true });
+  const { hook } = memoryLocation({ path: "/visit", static: true });
   return render(
     <WouterRouter hook={hook}>
-      <NeighborhoodPage />
+      <VisitPage />
     </WouterRouter>,
   );
 }

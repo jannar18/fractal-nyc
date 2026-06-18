@@ -1,4 +1,4 @@
-import { getTagLabel } from "@/data/lab-tags";
+import { getTagLabel } from "@/data/publications-tags";
 import { HOUSES } from "@/data/houses";
 
 // ---------------------------------------------------------------------------

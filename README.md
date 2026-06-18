@@ -2,7 +2,7 @@
 
 Community site for Fractal NYC — a network of coliving houses, a campus, events, education, and publications in Brooklyn. React + TypeScript + Vite, Tailwind CSS 4, Three.js for the homepage hero. Deployed on Netlify.
 
-**Pages:** `/` (homepage), `/story`, `/campus`, `/neighborhood` (Visit), `/events`, `/new-liberal-arts` (Education), `/lab` (Publications), `/political-club`, `/people`, `/the-protocol`.
+**Pages:** `/` (homepage), `/story`, `/campus`, `/visit`, `/events`, `/education`, `/publications`, `/political-club`, `/people`, `/the-protocol`. (Old paths `/neighborhood`, `/new-liberal-arts`, `/lab` redirect to their renamed routes.)
 
 ## Where to start
 
@@ -37,15 +37,15 @@ pnpm test       # vitest suite
 │   ├── index.css            Design tokens, global type rules, semantic utilities
 │   ├── pages/               One file per route
 │   ├── components/
-│   │   ├── sections/        Page sections (Hero, Campus, LiberalArts, …)
+│   │   ├── sections/        Page sections (Hero, Campus, Education, …)
 │   │   ├── house/           House banners, pennants, Mandelbrot icon
 │   │   ├── three/           OctahedronHero 3D scene
 │   │   ├── layout/          Navbar, Footer, SectorHeader
-│   │   ├── lab/             Publications archive (search, grid, badges)
+│   │   ├── publications/    Publications archive (search, grid, badges)
 │   │   └── ui/              shadcn primitives + brand components
 │   └── data/
 │       ├── houses.ts        Houses + people — names, taglines, descriptions, palettes
-│       ├── lab-documents.ts Publications archive entries
+│       ├── publications-documents.ts Publications archive entries
 │       └── storyPhotos.ts   Story page gallery
 ├── public/images/           Hero, banner, campus, and story images
 ├── scripts/                 Asset pipelines (hero bg, favicon, banner compression)

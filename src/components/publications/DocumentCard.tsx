@@ -1,4 +1,4 @@
-import { formatAuthors, type LabDocument, type DocumentCategory } from "@/data/lab-documents";
+import { formatAuthors, type PublicationDocument, type DocumentCategory } from "@/data/publications-documents";
 import type { LucideIcon } from "lucide-react";
 import { MandelbrotCorners } from "@/components/ui/MandelbrotCorners";
 import { HOUSES } from "@/data/houses";
@@ -38,7 +38,7 @@ const LAB_DEEP = HOUSES.find((h) => h.id === "lab")!.palette.deep;
 // ---------------------------------------------------------------------------
 
 interface DocumentCardProps {
-  document: LabDocument;
+  document: PublicationDocument;
   className?: string;
 }
 

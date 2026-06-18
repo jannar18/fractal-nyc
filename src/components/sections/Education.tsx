@@ -2,7 +2,7 @@ import { FadeIn } from "@/components/ui/FadeIn";
 import { SectorHeader } from "@/components/layout/SectorHeader";
 import { Button } from "@/components/ui/button";
 
-export function LiberalArts() {
+export function Education() {
   return (
     <section id="new-liberal-arts" className="flex flex-col items-center pt-16 pb-24 md:pt-24 overflow-x-hidden text-background">
       <div className="w-full px-6 md:px-[22%] text-center">
