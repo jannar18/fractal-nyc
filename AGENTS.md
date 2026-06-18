@@ -40,7 +40,7 @@ See `README.md` for the full annotated tree. Routes use display-aligned slugs (`
 
 ## Tech Stack
 
-- **Framework**: React 18 + TypeScript, built with Vite
+- **Framework**: React 19 + TypeScript, built with Vite
 - **Routing**: wouter (SPA; Netlify catch-all → `index.html`)
 - **Styling**: Tailwind CSS 4 + design tokens in `src/index.css` (mirrors `DESIGN.md`)
 - **3D**: Three.js via `@react-three/fiber` + `drei` (homepage octahedron hero)
