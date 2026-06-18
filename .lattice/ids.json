@@ -1,9 +1,5 @@
 {
-  "map": {
-    "FRAC-1": "task_01KVCQJYK3ZPTJKQPPXEB7HJHK"
-  },
-  "next_seqs": {
-    "FRAC": 2
-  },
+  "map": {},
+  "next_seqs": {},
   "schema_version": 2
 }
