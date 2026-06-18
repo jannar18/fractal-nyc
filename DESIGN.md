@@ -86,14 +86,14 @@ components:
 
 ## Overview
 
-Fractal NYC is an editorial site in a warm-print key: cream surfaces, charcoal type, oversized italic Fraunces headings, a JetBrains Mono body, and Jacquard 24 display accents. There is one color scheme — surfaces are always cream, type is always charcoal.
+Fractal NYC is an editorial site in a warm-print key: cream surfaces, charcoal type, oversized italic Fraunces headings, a JetBrains Mono body, and Jacquard 24 display accents.
 
-The site is organized as six themed houses — Visit, Events, Campus, Education, Political Club, Publications — each owning a `{light, deep}` color pair. The global voice stays charcoal-on-cream; each house tints its own pages from its pair.
+Fractal is organized into themed **houses** — Visit, Events, Campus, Education, Political Club, Publications — one per sector of the organization. Each house owns an accent color pair (`{light, deep}`) that brands its sector and themes its own pages. The houses are where the site's color lives.
 
 Two foundations:
 
 1. **Mobile-first, 375px baseline.** Every page and component is designed at phone width first. Wider viewports are progressive enhancement.
-2. **Charcoal is the voice.** `colors.foreground` is the dominant text color (`#171717`), an editorial charcoal rather than a saturated brand hue. Hierarchy comes from typography, color contrast, and whitespace; house colors provide scoped accents.
+2. **A quiet base so the houses can be loud.** The base is deliberately neutral — cream surfaces, charcoal text, one scheme, no dark mode — so the accent house colors carry the brand and signal Fractal's different sectors. There are so many pops of color from the houses that the base is kept simple, letting those accents read. Hierarchy comes from typography, contrast, and whitespace; color comes from the houses.
 
 Political Club is reachable by direct route (`/political-club`) but hidden from the navbar via the `hideFromNavbar` flag in `src/data/houses.ts` (a companion `hideFromBanners` flag drives the `VISIBLE_HOUSES` filter). It is the one house with no per-page banner SVG of its own.
 
@@ -103,7 +103,7 @@ Political Club (and the People page) are intentionally **not surfaced at initial
 
 The system declares **19 color tokens**: 4 surface tokens that drive the page chrome, 12 house tokens (6 houses × `{light, deep}`) that theme each house's pages, banner, and avatar, and 3 non-house section tokens — the `section-people-{light, deep}` pair plus the single `section-story` accent — for section pages that aren't houses (see [Non-house section colors](#non-house-section-colors)).
 
-The surface palette is deliberately lean: cream (`background`) is the page, and the rest is a **single charcoal voice expressed in three weights**. Naming reflects that — `foreground` → `foreground-muted` → `foreground-faint`, darkest to faintest. Neutral fills are expressed as `foreground` at low opacity (e.g. `bg-foreground/5` for the gallery image placeholder) rather than a dedicated fill token; focus rings and text selection use `foreground` directly. The site's color *accents* come from the house palette, not a neutral accent token. The original shadcn scaffold's unused neutrals (`card`, `popover`, `accent`, `secondary`, `primary`, `muted`, `destructive`, `input`, `ring`, and their `-foreground` pairs) were removed in FRAC-201 along with the dead components that consumed them; the two surviving charcoal tints were renamed from the scaffold's `muted-foreground` / `border` into this ladder.
+The surface palette is deliberately lean: cream (`background`) is the page, and the rest is charcoal in three weights — `foreground` → `foreground-muted` → `foreground-faint`, darkest to faintest. Neutral fills are `foreground` at low opacity (e.g. `bg-foreground/5` for the gallery image placeholder) rather than a dedicated fill token; focus rings and text selection use `foreground` directly. The site's color *accents* come from the house palette, not a neutral accent token.
 
 ### Surface palette
 
@@ -160,7 +160,7 @@ A small category distinct from the six houses: section pages that aren't houses 
 
 **People** is a *flooded* section (`{light, deep}`), like a house. The People page is intentionally **deferred from launch** (hidden from the navbar via `EXTRA_HIDDEN_HREFS` in `Navbar.tsx`) but kept fully tokenized and launch-ready — its `/people` route, octahedron face, and nav swatch all read from the same `SECTIONS.people` source.
 
-**Story** is a *cream* section (FRAC-205). It is a live page but, since it isn't a house, it reads as a **cream background with charcoal text** and a **single gold identity accent** (`section-story` `#D4BA58`) rather than a color flood. The accent appears only as decoration — the SectorHeader letter/name, the `FractalPattern` wallpaper, the `--accent`, and the TalkCard accents — while all body text stays charcoal (`text-foreground`), since gold-on-cream fails WCAG for small text. Story previously carried *three* golds (a pale `#DFCA7A` page background, a deep `#8A7A20` accent, and `#D4BA58`); those collapsed to this one. The pale page gold was the reason a third color had been bolted on — it was illegible on the cream navbar — so `#D4BA58`, the only one legible on cream, became the single identity color. Story's color is sourced from `SECTIONS.story.accent`; its `/story` page, octahedron face, hero nav node, and navbar swatch all read from there.
+**Story** is a *cream* section. Since it isn't a house, it reads as a **cream background with charcoal text** and a **single gold identity accent** (`section-story` `#D4BA58`) rather than a color flood. The accent appears only as decoration — the SectorHeader letter/name, the `FractalPattern` wallpaper, the `--accent`, and the TalkCard accents — while all body text stays charcoal (`text-foreground`), since gold-on-cream fails WCAG for small text. Story's color is sourced from `SECTIONS.story.accent`; its `/story` page, octahedron face, hero nav node, and navbar swatch all read from there.
 
 ### Surface + text pairings
 
@@ -173,11 +173,21 @@ Two text colors carry the entire site: charcoal (`text-foreground`) and cream (`
 
 The token suffix does **not** decide the text color. Campus (`house-campus-light` `#2E6B4A`) and Publications (`house-publications-light` `#E870A0`) both use a `-light` background token yet still take cream `text-background`, because those fills are dark/saturated enough that charcoal would fail contrast. The luminance of the actual surface decides, not the `-light`/`-deep` label.
 
-Secondary / supporting text uses `text-foreground-muted` (`#525252`), not `foreground-light` (that token was removed).
+Secondary / supporting text uses `text-foreground-muted` (`#525252`).
 
 Set the text color explicitly on the same node as the surface. A nested cream surface inside a house page re-asserts `text-foreground` on the inner surface, so text always pairs with its actual background rather than inheriting from the page cascade.
 
 **Known concern:** the Publications page (`PublicationsPage`) floods `bg-house-publications-light` (`#E870A0`, a bright pink) under cream `text-background`. Cream-on-pink is a borderline-contrast pairing worth a revisit.
+
+### 3D-scene palette (out-of-token)
+
+The WebGL hero scenes carry their own material/light palette that lives **deliberately outside** the 2D token system: Three.js materials and lights set color in JS props, where CSS custom properties don't resolve, so these are raw hex literals by necessity, not drift. They're sanctioned exceptions, grandfathered in `scripts/design-conformance.baseline.json` (this section is the *intent* half of that baseline entry). They never appear in 2D CSS — reach for them only inside the `three/` scene code.
+
+| Source | Colors | Role |
+|---|---|---|
+| `OctahedronHero.tsx` | `#e8e0d0` `#e0c880` `#ddb866` `#cc9955` `#c4a265` `#bb8844` `#8a7a6a` | octahedron gold/sand face-material tints |
+| `FractalCityScene.tsx` | `#ffaa66` `#ffcc88` `#f5f0ea` `#aabbcc` `#ffffff` | scene point/directional lights + ambient (`#aabbcc` is the cool fill `directionalLight`) |
+| `heroNavNodes.ts` | `#c4a265` | `PALETTE_FALLBACK` — the model gold used when a section/house color is missing |
 
 ## Typography
 
@@ -186,7 +196,7 @@ Four families ship, mapped onto three semantic tiers. Two families are declared 
 - **Fraunces** (`font-serif`) — the **Display** tier: headings, titles, and editorial highlights. Bare `h1–h6` default to plain Fraunces (family only, no forced case/style/weight); the visual tier is set explicitly at the call site via `.text-display` / `.text-title` / `.text-subtitle`. Heading LEVEL (document outline / a11y) is decoupled from visual TIER.
 - **Inter** (`font-sans`) — the **Body** tier: the content family for body copy, leads, asides, and editorial sign-offs (bylines, attributions).
 - **JetBrains Mono** (`font-mono`) — the **Chrome** tier: the non-content UI furniture — all the buttons, bars, labels, metadata, inputs, and frames that let users *control* the software (think address bar, tabs, nav buttons, status bars).
-- **Jacquard 24** — a display script (sits within the Display key). Inline-styled on the Navbar wordmark, where a `[style*="Jacquard"]` rule in `src/index.css` renders it in its natural case and posture; it also appears as the monogram letter and arc tagline inside each per-page banner SVG, where the family is embedded (base64) directly in the SVG so it renders independent of page CSS.
+- **Jacquard 24** — a display script (sits within the Display key). It headlines the Navbar, where a `[style*="Jacquard"]` rule in `src/index.css` renders it in its natural case and posture; it also appears as the monogram letter and arc tagline inside each per-page banner SVG, where the family is embedded (base64) directly in the SVG so it renders independent of page CSS. The Navbar is a **bespoke inline-styled display surface**: the whole mega-menu sets `fontSize`/`fontWeight`/`fontFamily` directly (`Navbar.tsx`, e.g. lines ~78, 90, 100, 180, 186, 218, 225, 273, 285, 318, 347), mixing Jacquard 24 caps with weight-100/300 mono and `clamp()` sizing — deliberately **outside** the semantic `.text-*` scale. It's low-consistency-expectation signature chrome; don't normalize it onto the type utilities.
 
 Global rules: `body` renders normal-case by default; uppercase is opt-in via `.font-serif` or the chrome utilities below.
 
@@ -214,13 +224,15 @@ The scale is delivered as utility classes in `src/index.css`. Each utility maps 
 
 `.text-aside` is the editorial italic voice — bylines, attributions, role labels, parenthetical asides. It pairs with `.text-subtitle` on quoted passages: the quote uses `.text-subtitle`, the byline uses `.text-aside`.
 
+Inline `<strong>` emphasis in body copy renders at `font-semibold` (weight 600) over the Inter-400 body — the sanctioned body-emphasis weight (used in `Campus.tsx`). `<strong>` semantically wants visual weight, and 600 is a measured editorial bump rather than a bold.
+
 **Chrome tier (JetBrains Mono)**
 
 | Utility | Rendering | Tailwind size |
 |---|---|---|
 | `.text-label` | uppercase, weight 500, tracking 0.1em | `text-sm` |
 
-The single chrome label utility — overline labels, form labels, inline metadata all reach for `.text-label`. (Earlier `.text-eyebrow` / `.text-meta` aliases were collapsed into this one name in FRAC-209.)
+The single chrome label utility — overline labels, form labels, inline metadata all reach for `.text-label`.
 
 **Mono-display tier (JetBrains Mono)**
 
@@ -244,7 +256,7 @@ For `<input>`, `<textarea>`, `<select>`, and other typeable controls. Sized at 1
 |---|---|---|
 | `default` | `px-8 py-5` | `text-sm tracking-widest uppercase font-medium` |
 
-The Button ships a single `default` size — JetBrains Mono, uppercase, `tracking-widest`, `font-medium`. (FRAC-214 removed the unused `sm` / `lg` / `icon` sizes.)
+The Button ships a single `default` size — JetBrains Mono, uppercase, `tracking-widest`, `font-medium`.
 
 ## Layout
 
@@ -254,6 +266,7 @@ The Button ships a single `default` size — JetBrains Mono, uppercase, `trackin
 
 - `px-6` — the mobile gutter and default page-edge inset.
 - `px-[4.5%]` — the full-bleed editorial gutter for sections whose breathing room scales with viewport width.
+- `md:px-[22%]` — the centered narrow-content desktop gutter: mobile stays `px-6`, then on `md+` a deep percentage inset squeezes a single column of editorial copy to the center of wide viewports. Used at `EventsPage.tsx:36`, `PublicationsPage.tsx:38`, `VisitPage.tsx:34`, `Education.tsx:8`.
 
 ### Containers
 
@@ -305,7 +318,7 @@ Borders resolve to one of three semantic tiers — pick by intent, not by eye:
 | **Definition** | `border-foreground/20` | A defining container edge on cream, without emphasis. | Hero search input + results dropdown, Hero keyboard-nav popover |
 | **Emphasis** | `[border-color:var(--accent,currentColor)]` | Themed house/section accent border — the same accent the button uses. For containers that want to carry the house color. Inherits `--accent` (set per page on `<main>`); falls back to `currentColor`. | `button-default`, Visit "Note" card (`VisitPage`), Events Luma embed (`EventsPage`) |
 
-The `--accent` custom property (renamed from the former button-accent var in FRAC-215) is set on each page's `<main>` to that page's house/section color and read by both the button and the Emphasis-tier borders. Focus/hover states (e.g. the Hero input's `focus:border-foreground/40`, the lab `focus:border-house-publications-deep/60`) sit deliberately outside this resting-tier vocabulary — they are transient states, not resting borders.
+The `--accent` custom property is set on each page's `<main>` to that page's house/section color and read by both the button and the Emphasis-tier borders. Focus/hover states (e.g. the Hero input's `focus:border-foreground/40`, the lab `focus:border-house-publications-deep/60`) sit deliberately outside this resting-tier vocabulary — they are transient states, not resting borders.
 
 ### Mandelbrot corners
 
@@ -342,7 +355,8 @@ Five components are modeled in the `components:` YAML block; the rest are descri
 
 ### Prose-only
 
-- **Navbar wordmark** — Jacquard 24, inline-styled, sized fluidly via `clamp()`.
+- **Navbar** — a bespoke inline-styled display surface, not just the wordmark. The wordmark is Jacquard 24 sized fluidly via `clamp()`, and the entire expanded mega-menu likewise sets `fontSize`/`fontWeight`/`fontFamily` inline (Jacquard 24 caps + weight-100/300 mono, `clamp()` sizing) — intentionally outside the `.text-*` scale (see §Typography). Treat it as signature chrome, themed but not on the semantic type system.
+- **`FractalPattern`** (`src/components/ui/FractalPattern.tsx`) — the low-opacity Sierpinski-tessellation wallpaper placed as the first child of `<main>` so it sits behind content. Its `color` prop is injected straight into SVG `stroke`/`fill` **presentation attributes**, where `var()` does **not** resolve — so the value must be a **literal hex sourced from the data model** (`HOUSES.find(...).palette.{light|deep}` / `SECTIONS.*`), never a hand-typed hex and never a CSS var. FRAC-206 established the convention (Political Club: `const PC_COLOR = HOUSES.find(h => h.id === "forum")!.palette.light`); FRAC-219 extends it to the remaining five house pages (Campus, Visit, Publications, Events, Education).
 - **Hero combobox** — the search/filter combobox on the homepage hero, with full combobox/listbox a11y semantics.
 - **OctahedronHero** — the homepage 3D scene (Three.js / React Three Fiber): an eight-face octahedron, each face carrying a section photo, with auto-rotation and breathing animations all gated by `usePrefersReducedMotion()`. Keyboard users reach the destination routes via the `.sr-only-focusable` skip-nav. Face order is locked in `src/components/three/OctahedronHero.tsx`.
 

@@ -7,6 +7,11 @@ import { FractalPattern } from "@/components/ui/FractalPattern";
 import { MandelbrotCorners } from "@/components/ui/MandelbrotCorners";
 import { Button } from "@/components/ui/button";
 import { VisitBannerSVG } from "@/components/house/VisitBannerSVG";
+import { HOUSES } from "@/data/houses";
+
+// FRAC-206/219: SVG stroke/fill needs a literal hex (var() doesn't resolve in SVG
+// presentation attributes); sourced from the canonical Visit (neighborhood) palette.
+const VISIT_COLOR = HOUSES.find((h) => h.id === "neighborhood")!.palette.deep;
 
 export function VisitPage() {
   return (
@@ -14,7 +19,7 @@ export function VisitPage() {
       className="relative min-h-screen bg-house-visit-light text-foreground selection:bg-foreground selection:text-background"
       style={{ "--accent": "var(--color-house-visit-deep)" } as CSSProperties}
     >
-      <FractalPattern color="#4A5A30" />
+      <FractalPattern color={VISIT_COLOR} />
       <div className="relative z-10">
       <Navbar />
       <div
@@ -58,7 +63,7 @@ export function VisitPage() {
             </FadeIn>
 
             <FadeIn delay={0.15}>
-              <MandelbrotCorners size="sm" opacity={0.15} className="border [border-color:var(--accent,currentColor)] rounded-md p-9 md:px-10 md:py-8 mb-3 md:mb-10 bg-foreground/[0.03] text-foreground text-left max-w-xl mx-auto">
+              <MandelbrotCorners size="sm" opacity={0.15} className="border [border-color:var(--accent,currentColor)] rounded-md p-9 md:px-10 md:py-8 mb-3 md:mb-10 bg-background text-foreground text-left max-w-xl mx-auto">
                 <p className="text-label text-foreground mb-2 md:mb-3">
                   Note
                 </p>
@@ -67,7 +72,7 @@ export function VisitPage() {
                 </p>
                 <div className="flex justify-center mt-1.5 md:mt-3">
                   <ol className="list-decimal list-inside space-y-1 md:space-y-2 text-body leading-relaxed text-foreground-muted text-left">
-                    <li>You fill out one of the forms below.</li>
+                    <li>You fill out the form above.</li>
                     <li>
                       An automatic message sends your info to leaseholders.
                     </li>
