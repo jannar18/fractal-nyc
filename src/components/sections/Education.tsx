@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export function Education() {
   return (
-    <section id="new-liberal-arts" className="flex flex-col items-center pt-16 pb-24 md:pt-24 overflow-x-hidden text-background">
+    <section id="education" className="flex flex-col items-center pt-16 pb-24 md:pt-24 overflow-x-hidden text-background">
       <div className="w-full px-6 md:px-[22%] text-center">
         <SectorHeader letter="E" name="Education" color="var(--color-house-education-light)" />
         <FadeIn>
