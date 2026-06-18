@@ -1,0 +1,1 @@
+{"actor":"agent:claude-opus-cleanup","data":{"priority":"medium","short_id":"FRAC-230","status":"backlog","title":"Clean unreferenced/unrendered files from public/ and public/images/","type":"task"},"id":"ev_01KVCNCP55MSV98YFES10TV4TQ","schema_version":1,"task_id":"task_01KVCNCP53ZFJTK6J0J1B2VA7Y","ts":"2026-06-18T06:06:15Z","type":"task_created"}
