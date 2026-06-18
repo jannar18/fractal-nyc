@@ -7,9 +7,9 @@ Community site for Fractal NYC — a network of coliving houses, a campus, event
 ## Where to start
 
 - **Editing copy, data, or images?** → [`EDITING.md`](./EDITING.md). Sitemap of every page → section → file, plus prompt patterns for common edits.
-- **Working in the code (developer or AI agent)?** → [`AGENTS.md`](./AGENTS.md). Session protocol, house rules, conformance discipline.
+- **Working in the code (developer or AI agent)?** → [`AGENTS.md`](./AGENTS.md) — **start here.** The session protocol: reading order, git sync, house rules, `DESIGN.md` conformance, and pre-PR validation. It points to the docs below.
 - **Looking up tokens / type / colors / components?** → [`DESIGN.md`](./DESIGN.md). The canonical design system.
-- **Task tracking?** → [`CLAUDE.md`](./CLAUDE.md). Lattice workflow — every change gets a tracked task, branch, and PR.
+- **Task tracking?** → [`CLAUDE.md`](./CLAUDE.md). The Lattice workflow `AGENTS.md` defers to — every change gets a tracked task, branch, and PR. (Also the file Claude auto-loads.)
 
 ## Run locally
 
