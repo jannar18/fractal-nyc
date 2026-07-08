@@ -2,20 +2,22 @@ import { useEffect, type RefObject } from "react";
 
 /**
  * Keeps a `position: fixed` decorative layer pinned to the viewport while the
- * user scrolls, but releases it so it never overlaps the page footer: as the
- * footer scrolls into view the layer is translated up to rest just above it,
- * then scrolls away with the footer. Used by the flanking house-banner layer
- * on the sector pages (Events, Education, Visit, Publications, Campus).
+ * user scrolls, but releases it before the page footer so it keeps a constant
+ * gap above it: the moment the footer enters the bottom of the viewport the
+ * layer starts moving up 1:1 with the footer, preserving exactly the breathing
+ * room the layer had on landing (its fixed bottom to the viewport bottom) as
+ * the gap between the layer's bottom and the footer. Used by the flanking
+ * house-banner layer on the sector pages (Events, Education, Visit,
+ * Publications, Campus).
  *
  * This is scroll-linked *layout* — the same contract as `position: sticky` —
  * not decorative motion: there is no transition and the offset tracks scroll
  * 1:1, so it is intentionally NOT gated behind `prefers-reduced-motion`
- * (disabling it would let the banners overlap the footer, which is worse).
+ * (disabling it would let the banners crowd the footer, which is worse).
  *
- * The layer's natural (fully-pinned) bottom is measured once and on resize; the
- * per-scroll work is a single `getBoundingClientRect` on the footer. On
+ * The per-scroll work is a single `getBoundingClientRect` on the footer. On
  * viewports where the layer is hidden (`display: none`, mobile) its measured
- * height is 0, so the clamp is inert. SSR-safe: no-ops without `window`.
+ * height is 0, so the clamp stays inert. SSR-safe: no-ops without `window`.
  *
  * The default selector targets the site footer's `data-site-footer` marker
  * rather than a bare `footer` tag — semantic `<footer>` elements can appear
@@ -32,17 +34,24 @@ export function useBannerAboveFooter(
     const footer = document.querySelector<HTMLElement>(footerSelector);
     if (!footer) return;
 
-    // Distance from the viewport top to the layer's bottom when fully pinned.
-    // Constant across scroll (the layer is fixed); recomputed only on resize.
-    let naturalBottom = 0;
+    // Whether the layer is actually rendered — it is `display: none` on mobile,
+    // where the clamp must stay inert. Re-checked on resize.
+    let visible = false;
     const measure = () => {
       banner.style.transform = "";
-      naturalBottom = banner.getBoundingClientRect().bottom;
+      visible = banner.getBoundingClientRect().height > 0;
     };
     const update = () => {
-      const overlap = naturalBottom - footer.getBoundingClientRect().top;
-      banner.style.transform =
-        overlap > 0 ? `translate3d(0, ${-overlap}px, 0)` : "";
+      if (!visible) {
+        banner.style.transform = "";
+        return;
+      }
+      // Once the footer's top rises above the viewport bottom, lift the layer
+      // by however far the footer has entered the viewport. The layer's own
+      // (fixed) bottom cancels out of the algebra, so the gap it holds above
+      // the footer is always its landing gap (fixed bottom -> viewport bottom).
+      const shift = Math.min(0, footer.getBoundingClientRect().top - window.innerHeight);
+      banner.style.transform = shift < 0 ? `translate3d(0, ${shift}px, 0)` : "";
     };
 
     measure();
