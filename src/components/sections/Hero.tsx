@@ -162,18 +162,16 @@ export function Hero() {
           Fraunces at a custom caption size (not one of the DESIGN.md display
           tiers) for a quiet editorial voice, sized to sit on a single line at
           the 375px baseline. `italic` is explicit even though .font-serif
-          already italicizes, to keep the intent obvious. `font-light` (300) is
-          the lightest Fraunces master actually loaded (index.html trims the
-          family to 300..500), so the italic renders from a true master rather
-          than a clamped out-of-range weight. Positioned below the geometry
+          already italicizes, to keep the intent obvious. `font-bold` (700) is
+          a real Fraunces master (index.html loads the family at 300..700), so
+          the bold renders true rather than being clamped/synthesized. Flanked
+          by `~` per the requested treatment. Positioned below the geometry
           (above the search bar) so "above" reads true; pointer-transparent so
           it never blocks taps/swipes underneath. */}
       <p
-        className="font-serif italic font-light normal-case text-sm md:text-lg whitespace-nowrap absolute bottom-28 left-1/2 -translate-x-1/2 z-10 max-w-full text-center text-foreground/45 pointer-events-none"
+        className="font-serif italic font-bold normal-case text-[15px] md:text-xl whitespace-nowrap absolute bottom-28 left-1/2 -translate-x-1/2 z-10 max-w-full text-center text-foreground/70 pointer-events-none"
       >
-        Interact with the{" "}
-        <span className="text-foreground/70">Octant</span> above to navigate
-        Fractal
+        ~ Interact with the Octant above to navigate Fractal ~
       </p>
 
       {/* Search bar */}
