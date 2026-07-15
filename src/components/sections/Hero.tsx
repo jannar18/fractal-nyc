@@ -158,15 +158,16 @@ export function Hero() {
       </Suspense>
 
       {/* CTA — instructs visitors to use the Octant (the hero octahedron) as
-          the primary navigation. Fraunces (font-serif) per DESIGN.md Display
-          tier, italic + extralight for a quiet editorial voice; positioned
-          below the geometry (above the search bar) so "above" reads true.
-          Pointer-transparent so it never blocks taps/swipes underneath. */}
+          the primary navigation. Fraunces (font-serif), italic + extralight
+          for a quiet editorial voice; sized to sit on a single line at the
+          375px baseline. Positioned below the geometry (above the search bar)
+          so "above" reads true. Pointer-transparent so it never blocks
+          taps/swipes underneath. */}
       <p
-        className="text-subtitle italic font-extralight absolute bottom-24 left-1/2 -translate-x-1/2 z-10 w-[calc(100%-2rem)] max-w-md text-center text-foreground/70 pointer-events-none"
+        className="font-serif italic font-extralight normal-case text-[13px] md:text-base whitespace-nowrap absolute bottom-[5.5rem] left-1/2 -translate-x-1/2 z-10 max-w-full text-center text-foreground/45 pointer-events-none"
       >
         Interact with the{" "}
-        <span className="text-foreground">Octant</span> above to navigate
+        <span className="text-foreground/70">Octant</span> above to navigate
         Fractal
       </p>
 
