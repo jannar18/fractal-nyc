@@ -3,6 +3,7 @@ import { useFrame, ThreeEvent } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import * as THREE from "three";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { SECTIONS } from "@/data/houses";
 
 // ---------------------------------------------------------------------------
@@ -813,6 +814,10 @@ function NavNodeMesh({
   // is decorrelated from the existing scale pulse and staggered across nodes.
   const glowPhase = useRef(Math.random() * Math.PI * 2);
   const prefersReducedMotion = usePrefersReducedMotion();
+  // Labels are always-on only on phones. On tablet/desktop they behave like
+  // tooltips — shown on hover — so the six labels don't crowd the wider layout.
+  const isMobile = useIsMobile();
+  const showLabel = isMobile || hovered;
 
   useFrame((state, delta) => {
     // Hide this node's always-on label while the node is on the far side of the
@@ -882,18 +887,21 @@ function NavNodeMesh({
           emissive={node.color}
           emissiveIntensity={1.0}
         />
-        {/* Always-on label. `pointerEvents: none` is deliberate: 6 permanently
-            visible label divs overlay the hero, and an interactive (auto) div
-            would intercept vertical swipes and regress the scroll-through work
-            (FRAC-109/124). The label is purely informational — navigation and
-            the hover glow both live on the invisible hit-target mesh below.
-            Its visibility is toggled each frame by the front/back test above so
-            a node facing away from the camera shows no popup. */}
-        <Html center distanceFactor={8} style={{ pointerEvents: "none" }}>
-          <div ref={labelRef} style={tooltipStyle(node.color)}>
-            {node.label}
-          </div>
-        </Html>
+        {/* Label. On phones it is always on (`showLabel` true) and purely
+            informational — `pointerEvents: none` so the six permanently visible
+            divs never intercept vertical swipes (would regress the
+            scroll-through work, FRAC-109/124); navigation and the hover glow
+            live on the invisible hit-target mesh below. On tablet/desktop it
+            shows only on hover. Either way, its visibility is toggled each
+            frame by the front/back test above so a node facing away from the
+            camera shows no popup. */}
+        {showLabel && (
+          <Html center distanceFactor={8} style={{ pointerEvents: "none" }}>
+            <div ref={labelRef} style={tooltipStyle(node.color)}>
+              {node.label}
+            </div>
+          </Html>
+        )}
       </mesh>
       {/* Invisible enlarged hit target for easier tapping on mobile (FRAC-79).
           Also owns the desktop hover state that drives the color/scale glow. */}

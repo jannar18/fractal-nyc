@@ -153,22 +153,22 @@ export function Hero() {
         </ul>
       </nav>
 
-      {/* CTA — instructs visitors to use the Octant (the hero octahedron) as
-          the primary navigation. Fraunces (font-serif) per DESIGN.md Display
-          tier; positioned above the geometry so "below" reads true. Sits clear
-          of the fixed masthead on mobile and is pointer-transparent so it never
-          blocks taps/swipes on the geometry underneath. */}
-      <p
-        className="text-subtitle absolute top-40 left-1/2 -translate-x-1/2 z-10 w-[calc(100%-2rem)] max-w-md text-center text-foreground/70 pointer-events-none"
-      >
-        interact with the{" "}
-        <em className="not-italic text-foreground">Octant</em> below to
-        navigate Fractal
-      </p>
-
       <Suspense fallback={null}>
         <FractalCityScene onNavigate={handleNavigate} />
       </Suspense>
+
+      {/* CTA — instructs visitors to use the Octant (the hero octahedron) as
+          the primary navigation. Fraunces (font-serif) per DESIGN.md Display
+          tier, italic + extralight for a quiet editorial voice; positioned
+          below the geometry (above the search bar) so "above" reads true.
+          Pointer-transparent so it never blocks taps/swipes underneath. */}
+      <p
+        className="text-subtitle italic font-extralight absolute bottom-24 left-1/2 -translate-x-1/2 z-10 w-[calc(100%-2rem)] max-w-md text-center text-foreground/70 pointer-events-none"
+      >
+        Interact with the{" "}
+        <span className="text-foreground">Octant</span> above to navigate
+        Fractal
+      </p>
 
       {/* Search bar */}
       <div
