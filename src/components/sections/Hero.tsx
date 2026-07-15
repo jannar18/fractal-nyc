@@ -169,7 +169,7 @@ export function Hero() {
           (above the search bar) so "above" reads true; pointer-transparent so
           it never blocks taps/swipes underneath. */}
       <p
-        className="font-serif italic font-light normal-case text-[13px] md:text-base whitespace-nowrap absolute bottom-[5.5rem] left-1/2 -translate-x-1/2 z-10 max-w-full text-center text-foreground/45 pointer-events-none"
+        className="font-serif italic font-light normal-case text-sm md:text-lg whitespace-nowrap absolute bottom-32 left-1/2 -translate-x-1/2 z-10 max-w-full text-center text-foreground/45 pointer-events-none"
       >
         Interact with the{" "}
         <span className="text-foreground/70">Octant</span> above to navigate
