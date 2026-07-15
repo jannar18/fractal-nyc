@@ -648,8 +648,12 @@ const PROTOCOL_BUTTON_ENABLED = false;
 
 function CenterOctahedron({
   onNavigate,
+  occluderRef,
 }: {
   onNavigate: (route: string) => void;
+  // Exposed as the Octant's center reference: nav-node labels read this mesh's
+  // world position for the front/back test that hides far-side labels.
+  occluderRef?: React.RefObject<THREE.Mesh | null>;
 }) {
   const [hovered, setHovered] = useState(false);
   const groupRef = useRef<THREE.Group>(null);
@@ -720,7 +724,7 @@ function CenterOctahedron({
       {/* FRAC-192: solid-color placeholder shell (opaque, radius 1) — always
           visible from frame 0. A face whose banner texture hasn't arrived (or
           permanently failed) shows its section color here. */}
-      <mesh geometry={geometry} material={placeholderMatArray}>
+      <mesh ref={occluderRef} geometry={geometry} material={placeholderMatArray}>
         {PROTOCOL_BUTTON_ENABLED && hovered && (
           <Html center distanceFactor={8} style={{ pointerEvents: "none" }}>
             <div style={tooltipStyle("hsl(var(--foreground))")}>The Protocol</div>
@@ -770,17 +774,39 @@ function CenterOctahedron({
 // Interactive nav node
 // ---------------------------------------------------------------------------
 
+// Reusable scratch vectors for the per-frame front/back label test below.
+// Shared at module scope (useFrame callbacks run sequentially on the main
+// thread, so there is no re-entrancy) to avoid allocating four Vector3s per
+// node per frame.
+const _nodeWorld = new THREE.Vector3();
+const _centerWorld = new THREE.Vector3();
+const _camDir = new THREE.Vector3();
+const _nodeDir = new THREE.Vector3();
+
+// Dot-product threshold that decides "facing away". A node is hidden when the
+// direction from the Octant's center to the node points into the screen
+// (aligned with the camera's view direction) by more than this. The small
+// positive margin keeps the top/bottom (±Y) nodes — which sit almost exactly
+// on the equator plane relative to the slightly-tilted camera — always shown.
+const FACING_AWAY_DOT = 0.15;
+
 function NavNodeMesh({
   position,
   node,
   onNavigate,
+  occluderRef,
 }: {
   position: THREE.Vector3;
   node: NavNode;
   onNavigate: (route: string) => void;
+  // The solid center crystal, used as the Octant's center reference for the
+  // front/back label test — a label hides while its node faces away.
+  occluderRef?: React.RefObject<THREE.Mesh | null>;
 }) {
+  const groupRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.MeshStandardMaterial>(null);
+  const labelRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState(false);
   const phase = useRef(Math.random() * Math.PI * 2);
   // FRAC-9: independent phase for the emissive glow pulse so the sine breath
@@ -788,7 +814,21 @@ function NavNodeMesh({
   const glowPhase = useRef(Math.random() * Math.PI * 2);
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
+    // Hide this node's always-on label while the node is on the far side of the
+    // rotating Octant (facing away from the camera), so only front-facing nodes
+    // show a popup. This is a front/back test rather than raycast occlusion:
+    // the nodes orbit well outside the small photo core, so they are almost
+    // never literally behind it — but they DO rotate to the back of the object,
+    // which is what "not in view" means here.
+    if (labelRef.current && groupRef.current && occluderRef?.current) {
+      groupRef.current.getWorldPosition(_nodeWorld);
+      occluderRef.current.getWorldPosition(_centerWorld);
+      state.camera.getWorldDirection(_camDir);
+      _nodeDir.subVectors(_nodeWorld, _centerWorld).normalize();
+      const facingAway = _nodeDir.dot(_camDir) > FACING_AWAY_DOT;
+      labelRef.current.style.visibility = facingAway ? "hidden" : "visible";
+    }
     if (meshRef.current) {
       // FRAC-28: scale-pulse is the decorative breathing on each nav node.
       // When the user prefers reduced motion, lock the node at its target
@@ -832,7 +872,7 @@ function NavNodeMesh({
   });
 
   return (
-    <group position={position}>
+    <group ref={groupRef} position={position}>
       {/* Visible node sphere */}
       <mesh ref={meshRef}>
         <sphereGeometry args={[0.08, 16, 16]} />
@@ -846,9 +886,13 @@ function NavNodeMesh({
             visible label divs overlay the hero, and an interactive (auto) div
             would intercept vertical swipes and regress the scroll-through work
             (FRAC-109/124). The label is purely informational — navigation and
-            the hover glow both live on the invisible hit-target mesh below. */}
+            the hover glow both live on the invisible hit-target mesh below.
+            Its visibility is toggled each frame by the front/back test above so
+            a node facing away from the camera shows no popup. */}
         <Html center distanceFactor={8} style={{ pointerEvents: "none" }}>
-          <div style={tooltipStyle(node.color)}>{node.label}</div>
+          <div ref={labelRef} style={tooltipStyle(node.color)}>
+            {node.label}
+          </div>
         </Html>
       </mesh>
       {/* Invisible enlarged hit target for easier tapping on mobile (FRAC-79).
@@ -906,6 +950,9 @@ export function FractalObject({
 }) {
   const groupRef = useRef<THREE.Group>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
+  // Shared occluder: the center crystal mesh. Passed to every nav node so its
+  // label can hide while the node is behind the core (FRAC labels-occlusion).
+  const centerOccluderRef = useRef<THREE.Mesh>(null);
 
   const outerVerts = useMemo(() => makeOctahedronVertices(1.7), []);
   const innerVerts = useMemo(() => makeOctahedronVertices(1.1), []);
@@ -964,7 +1011,7 @@ export function FractalObject({
       />
 
       {/* Center octahedron with per-face section textures */}
-      <CenterOctahedron onNavigate={onNavigate} />
+      <CenterOctahedron onNavigate={onNavigate} occluderRef={centerOccluderRef} />
 
       {/* 6 house nav nodes on outer octahedron vertices */}
       {OUTER_NAV_NODES.map((node) => (
@@ -973,6 +1020,7 @@ export function FractalObject({
           position={outerVerts[node.vertexIndex]}
           node={node}
           onNavigate={onNavigate}
+          occluderRef={centerOccluderRef}
         />
       ))}
     </group>
