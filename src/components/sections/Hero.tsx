@@ -157,6 +157,23 @@ export function Hero() {
         <FractalCityScene onNavigate={handleNavigate} />
       </Suspense>
 
+      {/* CTA — instructs visitors to use the Octant (the hero octahedron) as
+          the primary navigation. Intentional hero-only treatment: italic
+          Fraunces at a custom caption size (not one of the DESIGN.md display
+          tiers) for a quiet editorial voice, sized to sit on a single line at
+          the 375px baseline. `italic` is explicit even though .font-serif
+          already italicizes, to keep the intent obvious. `font-light` (300) is
+          the lightest Fraunces master loaded (index.html trims the family to
+          300..500). The whole line uses text-foreground/70 (the darker "Octant"
+          color) and is flanked by `~` per the requested treatment. Positioned
+          below the geometry (above the search bar) so "above" reads true;
+          pointer-transparent so it never blocks taps/swipes underneath. */}
+      <p
+        className="font-serif italic font-light normal-case text-lg md:text-2xl whitespace-nowrap absolute bottom-[6.5rem] md:bottom-28 left-1/2 -translate-x-1/2 z-10 max-w-full text-center text-foreground/70 pointer-events-none"
+      >
+        ~ Interact with the Octant above to navigate ~
+      </p>
+
       {/* Search bar */}
       <div
         className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 w-[calc(100%-2rem)] max-w-sm"
