@@ -782,88 +782,52 @@ function NavNodeMesh({
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.MeshStandardMaterial>(null);
   const [hovered, setHovered] = useState(false);
-  const [revealed, setRevealed] = useState(false);
-  const revealedRef = useRef(false);
-  const revealTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-  // FRAC-144: 100ms grace timer for hide so the cursor can transition from
-  // mesh -> popup without flashing. Cleared on any pointer-enter (mesh or
-  // popup), set on any pointer-leave.
-  const hoverHideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const phase = useRef(Math.random() * Math.PI * 2);
   // FRAC-9: independent phase for the emissive glow pulse so the sine breath
   // is decorrelated from the existing scale pulse and staggered across nodes.
   const glowPhase = useRef(Math.random() * Math.PI * 2);
   const prefersReducedMotion = usePrefersReducedMotion();
-  const isTouchDevice = typeof window !== "undefined" && "ontouchstart" in window;
-
-  const cancelHoverHide = () => {
-    if (hoverHideTimer.current) {
-      clearTimeout(hoverHideTimer.current);
-      hoverHideTimer.current = null;
-    }
-  };
-
-  const scheduleHoverHide = () => {
-    cancelHoverHide();
-    hoverHideTimer.current = setTimeout(() => {
-      setHovered(false);
-      document.body.style.cursor = "auto";
-    }, 100);
-  };
 
   useFrame((_, delta) => {
     if (meshRef.current) {
       // FRAC-28: scale-pulse is the decorative breathing on each nav node.
       // When the user prefers reduced motion, lock the node at its target
-      // size (hover/reveal still snaps cleanly via lerp) so the sinusoid
-      // pulse component is removed.
+      // size (hover still snaps cleanly via lerp) so the sinusoid pulse
+      // component is removed.
       if (prefersReducedMotion) {
-        const target = (hovered || revealed) ? 1.8 : 1.0;
+        const target = hovered ? 1.8 : 1.0;
         const s = meshRef.current.scale.x;
         meshRef.current.scale.setScalar(s + (target - s) * 0.15);
       } else {
         phase.current += delta * 2;
         const pulse = 1 + Math.sin(phase.current) * 0.08;
-        const target = (hovered || revealed) ? 1.8 : 1.0;
+        const target = hovered ? 1.8 : 1.0;
         const s = meshRef.current.scale.x / pulse;
         meshRef.current.scale.setScalar((s + (target - s) * 0.15) * pulse);
       }
     }
     // FRAC-9: emissive glow pulse. ~2.5s sinusoid period (TAU / 2.5 ~= 2.51
     // rad/s). Base intensity 1.0, amplitude 0.6 → glow breathes between 0.4
-    // and 1.6. Hover/reveal boosts to 2.4 peak. Reduced-motion → static.
+    // and 1.6. Hover boosts to 2.4 peak. Reduced-motion → static.
     if (materialRef.current) {
       if (prefersReducedMotion) {
-        materialRef.current.emissiveIntensity =
-          hovered || revealed ? 2.0 : 1.0;
+        materialRef.current.emissiveIntensity = hovered ? 2.0 : 1.0;
       } else {
         glowPhase.current += delta * 2.51;
-        const base = hovered || revealed ? 1.8 : 1.0;
-        const amp = hovered || revealed ? 0.6 : 0.6;
+        const base = hovered ? 1.8 : 1.0;
+        const amp = 0.6;
         materialRef.current.emissiveIntensity =
           base + Math.sin(glowPhase.current) * amp;
       }
     }
   });
 
-  // FRAC-124: Use tap-vs-drag discriminator instead of onClick. The
-  // reveal-then-tap touch-device behavior from FRAC-79 is preserved — it
-  // simply runs inside the confirmed-tap callback now. We read reveal state
-  // from a ref rather than the closure-captured `revealed` so that a single
-  // stable handler object sees the latest value.
+  // FRAC-124: Use tap-vs-drag discriminator instead of onClick. Labels are
+  // always visible now (see below), so a single confirmed tap navigates on
+  // every device — there is no longer a "reveal the label first" tap on
+  // touch. The discriminator still lets vertical swipes fall through to the
+  // page scroll (FRAC-109/124).
   const tapHandlers = useTapHandlers(() => {
-    // Touch devices: first tap reveals label, second tap navigates
-    if (isTouchDevice && !revealedRef.current) {
-      revealedRef.current = true;
-      setRevealed(true);
-      // Auto-hide after 3 seconds
-      if (revealTimeout.current) clearTimeout(revealTimeout.current);
-      revealTimeout.current = setTimeout(() => {
-        revealedRef.current = false;
-        setRevealed(false);
-      }, 3000);
-      return;
-    }
     onNavigate(node.route);
   });
 
@@ -878,45 +842,27 @@ function NavNodeMesh({
           emissive={node.color}
           emissiveIntensity={1.0}
         />
-        {(hovered || revealed) && (
-          <Html center distanceFactor={8} style={{ pointerEvents: "auto" }}>
-            <div
-              style={{
-                ...tooltipStyle(node.color),
-                cursor: "pointer",
-              }}
-              onPointerEnter={() => {
-                // Cursor moved from mesh into the popup — keep it visible.
-                cancelHoverHide();
-                setHovered(true);
-              }}
-              onPointerLeave={() => {
-                // Cursor left the popup. Schedule hide; will be cancelled if
-                // the cursor returns to the mesh or the popup within 100ms.
-                scheduleHoverHide();
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                onNavigate(node.route);
-              }}
-            >
-              {node.label}
-            </div>
-          </Html>
-        )}
+        {/* Always-on label. `pointerEvents: none` is deliberate: 6 permanently
+            visible label divs overlay the hero, and an interactive (auto) div
+            would intercept vertical swipes and regress the scroll-through work
+            (FRAC-109/124). The label is purely informational — navigation and
+            the hover glow both live on the invisible hit-target mesh below. */}
+        <Html center distanceFactor={8} style={{ pointerEvents: "none" }}>
+          <div style={tooltipStyle(node.color)}>{node.label}</div>
+        </Html>
       </mesh>
-      {/* Invisible enlarged hit target for easier tapping on mobile (FRAC-79) */}
+      {/* Invisible enlarged hit target for easier tapping on mobile (FRAC-79).
+          Also owns the desktop hover state that drives the color/scale glow. */}
       <mesh
         {...tapHandlers}
         onPointerOver={(e: ThreeEvent<PointerEvent>) => {
           e.stopPropagation();
-          cancelHoverHide();
           setHovered(true);
           document.body.style.cursor = "pointer";
         }}
         onPointerOut={() => {
-          // Schedule hide via grace timer (cancelled if popup is entered).
-          scheduleHoverHide();
+          setHovered(false);
+          document.body.style.cursor = "auto";
         }}
       >
         <sphereGeometry args={[0.3, 8, 8]} />
