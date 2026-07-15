@@ -169,9 +169,9 @@ export function Hero() {
           below the geometry (above the search bar) so "above" reads true;
           pointer-transparent so it never blocks taps/swipes underneath. */}
       <p
-        className="font-serif italic font-light normal-case text-[15px] md:text-xl whitespace-nowrap absolute bottom-[6.5rem] md:bottom-28 left-1/2 -translate-x-1/2 z-10 max-w-full text-center text-foreground/70 pointer-events-none"
+        className="font-serif italic font-light normal-case text-lg md:text-2xl whitespace-nowrap absolute bottom-[6.5rem] md:bottom-28 left-1/2 -translate-x-1/2 z-10 max-w-full text-center text-foreground/70 pointer-events-none"
       >
-        ~ Interact with the Octant above to navigate Fractal ~
+        ~ Interact with the Octant above to navigate ~
       </p>
 
       {/* Search bar */}
